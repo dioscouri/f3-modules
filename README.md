@@ -50,7 +50,7 @@ Use the following code to render a module position within one of your views.
 echo \Modules\Factory::render( 'your_custom_position_name', \Base::instance()->get('PARAMS.0') );
 ```
 
-### Add your app's modules to the system
+### Add your project's modules to the system
 
 To add your own custom modules to the system, put them all within subfolders of your own \Modules folder, for example:
 ```

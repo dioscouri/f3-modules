@@ -69,6 +69,17 @@ Then register your module folder with the system:
 \Modules\Factory::registerPath( $f3->get('PATH_ROOT') . "apps/site/modules/" );
 ```
 
+### Module filesystem structure
+
+1. Each module must have a module.json file in its document root, the contents of which is a single json object with at least a title (unique), eg:
+```
+{
+    "title": "Your Custom Module"
+}
+```
+
+2. Each module must have a Module.php file in its document root that contains a single class.  The class should be namespaced (e.g. \Your\Custom\Namespace) and the class name should be 'Module'.  Finally, the class must extend \Modules\Abstracts\Module 
+
 ### Bootstrap your modules
 
 All of your modules can have their own bootstrap.php file, and therefore can have their own Listeners.  Put the bootstrap.php file in the root of their folder, such as:

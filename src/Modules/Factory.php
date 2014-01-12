@@ -56,6 +56,15 @@ class Factory extends \Prefab
         return $return;    
     }
     
+    /**
+     * Render a module position
+     * 
+     * @param unknown $position
+     * @param string $route
+     * @param unknown $options
+     * 
+     * @return string HTML
+     */
     public static function render( $position, $route=null, $options=array() )
     {
         $contents = array();

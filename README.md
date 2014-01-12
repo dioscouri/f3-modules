@@ -57,8 +57,10 @@ To add your own custom modules to the system, put them all within subfolders of 
 /apps/site/modules/
 ```
 resulting in:
+```
 /apps/site/modules/custom_module_1/
 /apps/site/modules/custom_module_2/
+```
 
 Then register your module folder with the system:
 
@@ -70,12 +72,15 @@ Then register your module folder with the system:
 ### Bootstrap your modules
 
 All of your modules can have their own bootstrap.php file, and therefore can have their own Listeners.  Put the bootstrap.php file in the root of their folder, such as:
-
+```
 /apps/site/modules/custom_module_1/bootstrap.php
 /apps/site/modules/custom_module_2/bootstrap.php
+```
 
 ### Add custom fields to the f3-admin module-editing form
 
 Your module's Listener can add custom html to the f3-admin module-editing form.  See the core Megamenu Module for a working example:
 
+```
 f3-modules/src/Modules/Modules/Megamenu/Listeners/Admin.php
+```

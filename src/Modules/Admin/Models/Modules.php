@@ -147,6 +147,9 @@ class Modules extends \Dsc\Models\Nodes
                 {
                     if (file_exists( $path . $folder . '/module.json' )) 
                     {
+
+                      //  echo $path . $folder . '/module.json';
+                       // die();
                         $file = $path . $folder . '/module.json';
                         if ($contents = file_get_contents($file)) 
                         {

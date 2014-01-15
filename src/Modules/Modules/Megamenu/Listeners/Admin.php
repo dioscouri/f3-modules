@@ -6,7 +6,7 @@ class Admin extends \Prefab
     public function onDisplayAdminModuleEdit( $event ) 
     {
         $module = $event->getArgument('module');
-        if ($module != "core.megamenu") {
+        if ($module != "core.megamenu::\Modules\Modules\Megamenu\Module") {
             return;
         }
 

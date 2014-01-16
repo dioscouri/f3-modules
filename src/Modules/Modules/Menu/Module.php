@@ -5,6 +5,7 @@ class Module extends \Modules\Abstracts\Module
 {
     public $list = array(); // unprocessed list of menu items, typically straight from the data source
     public $items = array(); // final, processed list of menu items ready for display
+    public $layout = 'default.php';
     
     public function __construct($options=array()) 
     {
@@ -14,7 +15,6 @@ class Module extends \Modules\Abstracts\Module
         }
 
         parent::__construct($options);
-        
         
         $this->prepareMenu();
     }
@@ -28,11 +28,8 @@ class Module extends \Modules\Abstracts\Module
     public function prepareMenu()
     {
         if (empty($this->list)) {
-            // TODO Load the menu based on the module's parameters
-             $model = new \Admin\Models\Menus;
-             $this->list = $model->setState('filter.tree', $this->mapper->details['selected-menu'])->getList();
-
-
+            // Load the menu based on the module's parameters
+            $this->list = \Admin\Models\Menus::instance()->emptyState()->setState('filter.root', false)->setState('filter.published', true)->setState('filter.tree', $this->mapper->{'details.selected-menu'})->setState('order_clause', array( 'tree'=> 1, 'lft' => 1 ))->getList();
         }
         
         if (empty($this->list)) {
@@ -40,34 +37,6 @@ class Module extends \Modules\Abstracts\Module
         }
 
         $items = $this->list;
-        
-        $children = array();
-        foreach ($items as $key=>$item) 
-        {
-            if (!empty($item->parent)) {
-                if (empty($children[(string)$item->parent])) {
-                    $children[(string)$item->parent] = array();
-                }
-                $children[(string)$item->parent][] = $item;
-            }
-        }
-        
-        foreach ($items as $key=>$item) 
-        {
-            if (!empty($children[(string)$item->id])) {
-                $item->set('children', $children[(string)$item->id]);
-            } else {
-                $item->set('children', array() );
-            }
-        }
-        
-        foreach ($items as $key=>$item) 
-        {
-            if ($item->getDepth() > 2) 
-            {
-                unset($items[$key]);
-            }
-        }
         
         $this->items = $items;
     }
@@ -82,7 +51,7 @@ class Module extends \Modules\Abstracts\Module
         
         $f3->set('module', $this);
         
-        $string = \Dsc\Template::instance()->renderLayout('Modules/Menu/Views::default.php');
+        $string = \Dsc\Template::instance()->renderLayout('Modules/Menu/Views::' . $this->layout);
         
         $f3->set('UI', $old_ui);
         

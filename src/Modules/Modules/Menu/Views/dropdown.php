@@ -18,18 +18,30 @@ foreach ($list as $key => $item)
         $found = true;
         $class .= " active current";
     }
-    
+    $dropdown = false;
+    if (isset($list[$key+1]) && $list[$key+1]->getDepth() > $item->getDepth()) {
+        $class .= " dropdown";
+        $dropdown = true;
+    }
+        
 	echo '<li class="' . $class . '">';
 	
 	// is this a module?
     // or just a regular link?
-    echo '<a href="' . $item->{'details.url'} . '">';
-    echo $item->title;
-    echo '</a>';
-
+    if ($dropdown) {
+        echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
+        echo $item->title;
+        echo '<b class="caret"></b>';
+        echo '</a>';        
+    } else {
+        echo '<a href="' . $item->{'details.url'} . '">';
+        echo $item->title;
+        echo '</a>';
+    }
+    
 	// The next item is deeper.
-	if (isset($list[$key+1]) && $list[$key+1]->getDepth() > $item->getDepth()) {
-	    echo '<ul>';	
+    if ($dropdown) {
+	    echo '<ul class="dropdown-menu">';
 	}
 	// The next item is shallower.
 	elseif (isset($list[$key+1]) && $item->getDepth() > $list[$key+1]->getDepth()) {

@@ -28,8 +28,7 @@ class Module extends \Modules\Abstracts\Module
     {
         if (empty($this->list) && !empty($this->mapper->{'megamenu.menu'})) {
             // Load the menu based on the module's parameters
-            $model = new \Admin\Models\Menus;
-            $this->list = $model->setState('filter.tree', $this->mapper->{'megamenu.menu'})->getList();            
+            $this->list = \Admin\Models\Menus::instance()->emptyState()->setState('filter.root', false)->setState('filter.published', true)->setState('filter.tree', $this->mapper->{'megamenu.menu'})->setState('order_clause', array( 'tree'=> 1, 'lft' => 1 ))->getList();
         }
         
         if (empty($this->list)) {

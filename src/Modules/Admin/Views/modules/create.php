@@ -45,6 +45,9 @@ jQuery(document).ready(function(){
                     <a href="#tab-basics" data-toggle="tab"> Basics </a>
                 </li>
                 <li>
+                    <a href="#tab-display" data-toggle="tab"> Display </a>
+                </li>
+                <li>
                     <a href="#tab-assignment" data-toggle="tab"> Assignment </a>
                 </li>
                 <li>
@@ -185,6 +188,43 @@ jQuery(document).ready(function(){
                 </div>
                 <!-- /.row -->
                 
+                </div>
+                <!-- /.tab-pane -->
+                
+                <div class="tab-pane" id="tab-display">
+                
+                    <div class="form-group">
+                        <label>Display Title</label>
+                        <div class="form-group">
+                        <label class="radio-inline">
+                            <input type="radio" name="display[title]" value="1" <?php if (is_null($flash->old('display.title')) || $flash->old('display.title') == '1') { echo 'checked'; } ?>> Yes
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="display[title]" value="0" <?php if ($flash->old('display.title') == '0') { echo 'checked'; } ?>> No
+                        </label>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label for="class">Title Tag</label>
+                        <select name="display[title_tag]" class="form-control">
+                            <option value="h1" <?php if ($flash->old('display.title_tag') == "h1") { echo "selected='selected'"; } ?>>H1</option>
+                            <option value="h2" <?php if ($flash->old('display.title_tag') == "h2") { echo "selected='selected'"; } ?>>H2</option>
+                            <option value="h3" <?php if ($flash->old('display.title_tag') == "h3") { echo "selected='selected'"; } ?>>H3</option>
+                            <option value="h4" <?php if ($flash->old('display.title_tag') == "h4" || is_null($flash->old('display.title_tag'))) { echo "selected='selected'"; } ?>>H4</option>
+                            <option value="h5" <?php if ($flash->old('display.title_tag') == "h5") { echo "selected='selected'"; } ?>>H5</option>
+                            <option value="h6" <?php if ($flash->old('display.title_tag') == "h6") { echo "selected='selected'"; } ?>>H6</option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+                    
+                    <div class="form-group">
+                        <label for="class">Class Suffix</label>
+                        <input type="text" name="display[classes]" placeholder="A string added to the class attribute of the element wrapping the entire module" value="<?php echo $flash->old('display.classes'); ?>" class="form-control" />
+                    </div>
+                    <!-- /.form-group -->
+                                        
                 </div>
                 <!-- /.tab-pane -->
                 

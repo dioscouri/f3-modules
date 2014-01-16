@@ -26,8 +26,10 @@ class Module extends \Modules\Abstracts\Module
      */
     public function prepareMenu()
     {
-        if (empty($this->list)) {
-            // TODO Load the menu based on the module's parameters
+        if (empty($this->list) && !empty($this->mapper->{'megamenu.menu'})) {
+            // Load the menu based on the module's parameters
+            $model = new \Admin\Models\Menus;
+            $this->list = $model->setState('filter.tree', $this->mapper->{'megamenu.menu'})->getList();            
         }
         
         if (empty($this->list)) {

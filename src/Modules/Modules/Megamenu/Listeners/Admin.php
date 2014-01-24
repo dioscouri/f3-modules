@@ -21,6 +21,26 @@ class Admin extends \Prefab
         $event->setArgument('content', $content);
     }
     
+    public function onDisplayAdminMenusEdit( $event )
+    {
+        $item = $event->getArgument('item');
+        $tabs = $event->getArgument('tabs');
+        $content = $event->getArgument('content');
+    
+        $tabs[] = 'Megamenu';
+        
+        $f3 = \Base::instance();
+        $old_ui = $f3->get('UI');
+        $temp_ui = dirname( __FILE__ ) . "/../Admin/Views/";
+        $f3->set('UI', $temp_ui);
+        $f3->set('item', $event->getArgument('item'));
+        $content[] = \Dsc\Template::instance()->renderLayout('Modules/Modules/Megamenu/Admin/Views::menuitem.php');
+        $f3->set('UI', $old_ui);
+    
+        $event->setArgument('tabs', $tabs);
+        $event->setArgument('content', $content);
+    }
+    
     protected function getSelect( $item )
     {
         $model = new \Admin\Models\Menus();

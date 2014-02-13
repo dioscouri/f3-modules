@@ -57,7 +57,7 @@ class Admin extends \Prefab
             {
                 $html .= '<option value="' . $one->id . '"';
     
-                if ($one->id == $item->{'megamenu.menu'})
+                if (!empty($item->{'megamenu.menu'}) && $one->id == $item->{'megamenu.menu'})
                 {
                     $html .= "selected='selected'";
                 }

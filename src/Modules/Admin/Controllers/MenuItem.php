@@ -7,7 +7,7 @@ class MenuItem extends \Admin\Controllers\BaseAuth
 	{
 	    \Base::instance()->set('item', $event->getArgument('item'));
 	    
-		$view = new \Dsc\Template;
+		$view = \Dsc\System::instance()->get('theme');
 		return $view->renderLayout('Modules/Admin/Views::menuitem/html.php');
 	}
 }

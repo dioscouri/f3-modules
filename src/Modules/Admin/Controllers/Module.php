@@ -45,7 +45,7 @@ class Module extends \Admin\Controllers\BaseAuth
         $all_positions = $this->getModel()->positions();
         \Base::instance()->set('all_positions', $all_positions );
         
-        $view = new \Dsc\Template;
+        $view = \Dsc\System::instance()->get('theme');
         echo $view->render('Modules/Admin/Views::modules/create.php');
     }
     
@@ -63,7 +63,7 @@ class Module extends \Admin\Controllers\BaseAuth
         $item = $this->getItem();
         $type = $item->{'metadata.type'};
         
-        $view = new \Dsc\Template;
+        $view = \Dsc\System::instance()->get('theme');
         $view->event = $view->trigger( 'onDisplayAdminModuleEdit', array( 'module' => $type, 'item' => $item, 'tabs' => array(), 'content' => array() ) );
 
         echo $view->render('Modules/Admin/Views::modules/edit.php');
@@ -91,7 +91,7 @@ class Module extends \Admin\Controllers\BaseAuth
             return;
         }
 
-        $view = new \Dsc\Template;
+        $view = \Dsc\System::instance()->get('theme');
         $view->event = $view->trigger( 'onDisplayAdminModuleEdit', array( 'module' => $type, 'item' => $this->getItem(), 'tabs' => array(), 'content' => array() ) );
         $html = $view->renderLayout('Modules/Admin/Views::modules/options.php');
         

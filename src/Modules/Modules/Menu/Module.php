@@ -50,8 +50,9 @@ class Module extends \Modules\Abstracts\Module
         $f3->set('UI', $temp_ui);
         
         $f3->set('module', $this);
-        
-        $string = \Dsc\Template::instance()->renderLayout('Modules/Menu/Views::' . $this->layout);
+
+        \Dsc\System::instance()->get('theme')->registerViewPath( __dir__ . '/Views/', 'Modules/Menu/Views' );
+        $string = \Dsc\System::instance()->get('theme')->renderLayout('Modules/Menu/Views::' . $this->layout);        
         
         $f3->set('UI', $old_ui);
         

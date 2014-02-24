@@ -78,7 +78,8 @@ class Module extends \Modules\Abstracts\Module
         
         $f3->set('module', $this);
         
-        $string = \Dsc\Template::instance()->renderLayout('Modules/Megamenu/Views::default.php');
+        \Dsc\System::instance()->get('theme')->registerViewPath( __dir__ . '/Views/', 'Modules/Megamenu/Views' );
+        $string = \Dsc\System::instance()->get('theme')->renderLayout('Modules/Megamenu/Views::default.php');        
         
         $f3->set('UI', $old_ui);
         
@@ -120,7 +121,7 @@ class Module extends \Modules\Abstracts\Module
             $data_target = 'dm-' . $item->id;
             
             $strings[] = '<li class="dropdown mega-menu mega-menu-' . $columns . '">';
-                $strings[] = '<a href="' . $url . '" data-target="#' . $data_target . '" class="dropdown-toggle'. $a_class .'" data-toggle="dropdown" data-hover="dropdown">';
+                $strings[] = '<a href="' . $url . '" data-target="#' . $data_target . '" class="dropdown-toggle disabled'. $a_class .'" data-toggle="dropdown" data-hover="dropdown">';
                 // display title?
                 if ($item->display_title == 0) {} else
                 {                

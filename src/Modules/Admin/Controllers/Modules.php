@@ -3,6 +3,7 @@ namespace Modules\Admin\Controllers;
 
 class Modules extends \Admin\Controllers\BaseAuth 
 {
+
     public function index()
     {
         \Base::instance()->set('pagetitle', 'Modules');

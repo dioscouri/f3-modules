@@ -1,5 +1,3 @@
-<?php // echo \Dsc\Debug::dump( $flash->get('old'), false ); ?>
-
 <script src="./ckeditor/ckeditor.js"></script>
 <script>
 jQuery(document).ready(function(){

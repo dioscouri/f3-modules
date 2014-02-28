@@ -6,7 +6,7 @@ jQuery(document).ready(function(){
 
 </script>
 
-<form id="detail-form" action="./admin/module/update/<?php echo $item->get( $model->getItemKey() ); ?>" class="form" method="post">
+<form id="detail-form" class="form" method="post">
     <div class="row">
     
         <div class="col-md-12">

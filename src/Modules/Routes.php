@@ -23,8 +23,7 @@ class Routes extends \Dsc\Routes\Group{
 					'url_prefix' => '/admin'
 				)
 		);
-		
-		$this->addCrudList('Modules');
+		$this->addCrudList('Modules', array('/modules'));
 		$this->addCrudItem( 'Module' );
 
 		$this->add( '/module/options', 'GET', array(

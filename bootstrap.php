@@ -11,7 +11,7 @@ switch ($global_app_name)
         // register event listener
         \Dsc\System::instance()->getDispatcher()->addListener(\Modules\Listener::instance());
         // register all the routes
-        \Dsc\System::instance()->get('router')->mount( new \Modules\Routes );
+        \Dsc\System::instance()->get('router')->mount( new \Modules\Routes, 'modules' );
         
         // append this app's UI folder to the path
         // new way

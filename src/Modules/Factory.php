@@ -11,17 +11,19 @@ class Factory extends \Prefab
     {
         $paths = \Base::instance()->get('dsc.module.paths');
         
-        foreach ($paths as $path)
-        {
-            if ($folders = \Joomla\Filesystem\Folder::folders( $path ))
-            {
-                foreach ($folders as $folder)
-                {
-                    if (file_exists( $path . $folder . '/bootstrap.php' )) {
-                        require_once $path . $folder . '/bootstrap.php';
-                    }
-                }
-            }
+        if( !empty( $paths ) ){
+	        foreach ($paths as $path)
+	        {
+	            if ($folders = \Joomla\Filesystem\Folder::folders( $path ))
+	            {
+	                foreach ($folders as $folder)
+	                {
+	                    if (file_exists( $path . $folder . '/bootstrap.php' )) {
+	                        require_once $path . $folder . '/bootstrap.php';
+	                    }
+	                }
+	            }
+        	}
         }
         
         return $this;

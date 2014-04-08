@@ -14,10 +14,10 @@ class Modules extends \Admin\Controllers\BaseAuth
         \Base::instance()->set('state', $state );
         
         $list = $model->paginate();
-        \Base::instance()->set('list', $list );
-        
-        $pagination = new \Dsc\Pagination($list['total'], $list['limit']);       
-        \Base::instance()->set('pagination', $pagination );
+
+        $paginated = new \Dsc\Pagination($list['total'], $list['limit']);
+        $paginated->items = !empty($list['subset']) ? $list['subset'] : array();
+        \Base::instance()->set('paginated', $paginated );
         
         $view = \Dsc\System::instance()->get('theme');
         echo $view->render('Modules/Admin/Views::modules/list.php');

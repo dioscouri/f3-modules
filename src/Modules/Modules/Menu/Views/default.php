@@ -9,7 +9,7 @@ $id_tag = $params->get('tag_id') ? "id='" . $params->get('tag_id') . "'" : null;
 $found = false;   
 ?>
 
-<ul <?php echo $id_tag; ?> class="nav <?php echo $class_suffix;?>">
+<ul <?php echo $id_tag; ?> class="<?php echo $class_suffix;?>">
 <?php
 foreach ($list as $key => $item) 
 {

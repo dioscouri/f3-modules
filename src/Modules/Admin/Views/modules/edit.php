@@ -6,6 +6,8 @@ jQuery(document).ready(function(){
 
 </script>
 
+<div class="well">
+
 <form id="detail-form" class="form" method="post">
     <div class="row">
     
@@ -337,3 +339,5 @@ jQuery(document).ready(function(){
 
     </div>
 </form>
+
+</div>

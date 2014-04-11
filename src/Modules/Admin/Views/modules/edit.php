@@ -11,7 +11,7 @@ jQuery(document).ready(function(){
     
         <div class="col-md-12">
         
-            <div class="form-actions clearfix">
+            <div class="clearfix">
 
                 <div class="pull-right">
                     <div class="btn-group">

@@ -96,10 +96,10 @@
     		<thead>
     			<tr>
     			    <th class="checkbox-column"><input type="checkbox" class="icheck-input"></th>
-    				<th data-sortable="metadata.title">Title</th>
-    				<th data-sortable="metadata.type">Type</th>
+    				<th data-sortable="title">Title</th>
+    				<th data-sortable="type">Type</th>
     				<th>Positions</th>
-    				<th data-sortable="metadata.ordering">Order</th>
+    				<th data-sortable="ordering">Order</th>
     				<th>Status</th>				
     				<th class="col-md-1"></th>
     			</tr>
@@ -117,25 +117,25 @@
                     <td class="">
                         <h5>
                         <a href="./admin/module/edit/<?php echo $item->id; ?>">
-                        <?php echo $item->{'metadata.title'}; ?>
+                        <?php echo $item->{'title'}; ?>
                         </a>
                         </h5>
                         
                         <p class="help-block">
-                        <?php echo $item->{'details.description'}; ?>
+                        <?php echo $item->{'description'}; ?>
                         </p>
                     </td>
     
                     <td class="">
-                    <?php echo substr( $item->{'metadata.type'}, 0, strpos( $item->{'metadata.type'}, '::' ) ); ?>
+                    <?php echo substr( $item->{'type'}, 0, strpos( $item->{'type'}, '::' ) ); ?>
                     </td>
                     
                     <td class="">
-                    <?php echo implode(", ", (array) $item->{'metadata.positions'} ); ?>
+                    <?php echo implode(", ", (array) $item->{'positions'} ); ?>
                     </td>
     
                     <td class="">
-                    <?php echo (int) $item->{'metadata.ordering'}; ?>
+                    <?php echo (int) $item->{'ordering'}; ?>
                     </td>
                     
                     <td class="">

@@ -3,7 +3,7 @@ namespace Modules\Admin\Controllers;
 
 class Module extends \Admin\Controllers\BaseAuth 
 {
-    use \Dsc\Traits\Controllers\OrderableItem;
+    use \Dsc\Traits\Controllers\OrderableItemCollection;
 
     protected $list_route = '/admin/modules';
     protected $create_item_route = '/admin/module/create';
@@ -12,7 +12,7 @@ class Module extends \Admin\Controllers\BaseAuth
     
     protected function getModel() 
     {
-        $model = new \Modules\Admin\Models\Modules;
+        $model = new \Modules\Models\Modules;
         return $model; 
     }
     

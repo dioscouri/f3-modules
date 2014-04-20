@@ -1,1 +1,1 @@
-<?php echo $module->mapper->{'details.copy'}; ?>
+<?php echo $module->model->{'copy'}; ?>

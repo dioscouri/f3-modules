@@ -63,13 +63,13 @@ jQuery(document).ready(function(){
             
                     <div class="col-md-9">
                         <div class="form-group">
-                            <input type="text" name="metadata[title]" placeholder="Title" value="<?php echo $flash->old('metadata.title'); ?>" class="form-control" />
+                            <input type="text" name="title" placeholder="Title" value="<?php echo $flash->old('title'); ?>" class="form-control" />
                         </div>
                         <!-- /.form-group -->
                         
                         <div class="form-group">
                             <label><small class="help-block">Note: HTML entered here may not be displayed by all Module Types</small></label>
-                            <textarea name="details[copy]" class="form-control wysiwyg"><?php echo $flash->old('details.copy'); ?></textarea>
+                            <textarea name="copy" class="form-control wysiwyg"><?php echo $flash->old('copy'); ?></textarea>
                         </div>
                         <!-- /.form-group -->
                         
@@ -143,7 +143,7 @@ jQuery(document).ready(function(){
                             <div class="portlet-content">
                             
                                 <div class="input-group">
-                                    <input name="metadata[positions]" data-tags='<?php echo json_encode( $all_positions ); ?>' value="<?php echo implode(",", (array) $flash->old('metadata.positions') ); ?>" type="text" class="form-control ui-select2-tags" /> 
+                                    <input name="positions" data-tags='<?php echo json_encode( $all_positions ); ?>' value="<?php echo implode(",", (array) $flash->old('positions') ); ?>" type="text" class="form-control ui-select2-tags" /> 
                                 </div>
                                 <!-- /.form-group -->
             
@@ -164,7 +164,7 @@ jQuery(document).ready(function(){
             
                             <div class="portlet-content">
                                 <div class="form-group">
-                                    <input name="metadata[ordering]" value="<?php echo (int) $flash->old('metadata.ordering'); ?>" type="text" class="form-control" />
+                                    <input name="ordering" value="<?php echo (int) $flash->old('ordering'); ?>" type="text" class="form-control" />
                                     <p class="help-block">Ordering applies within a <i>position</i></p> 
                                 </div>
                                 <!-- /.form-group -->
@@ -177,7 +177,7 @@ jQuery(document).ready(function(){
                         
                         <div class="form-group">
                             <label>Description - Admin Only</label>
-                            <textarea name="details[description]" class="form-control"><?php echo $flash->old('details.description'); ?></textarea>
+                            <textarea name="description" class="form-control"><?php echo $flash->old('description'); ?></textarea>
                         </div>
                         <!-- /.form-group -->
                         
@@ -297,11 +297,11 @@ jQuery(document).ready(function(){
                 <div class="tab-pane" id="tab-options">
                     <div class="form-group">
                         <label>Type</label>
-                        <select name="metadata[type]" class="form-control" onchange="ModulesGetOptions();">
+                        <select name="type" class="form-control" onchange="ModulesGetOptions();">
                         <?php foreach ($grouped_types as $key=>$types) { ?>
                             <optgroup label="<?php echo $key; ?>">
                             <?php foreach ($types as $type) { ?>                    
-                                <option value="<?php echo $type->type; ?>" <?php if ($type->type == $flash->old('metadata.type')) { echo "selected='selected'"; } ?>><?php echo $type->title; ?></option>
+                                <option value="<?php echo $type->type; ?>" <?php if ($type->type == $flash->old('type', $model->type() ) ) { echo "selected='selected'"; } ?>><?php echo $type->title; ?></option>
                             <?php } ?>
                             </optgroup>
                         <?php } ?>

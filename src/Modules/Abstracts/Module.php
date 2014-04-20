@@ -3,16 +3,16 @@ namespace Modules\Abstracts;
 
 abstract class Module  
 {
-    public $mapper = null; // a \Modules\Mappers\Module
+    public $model = null; // a \Modules\Models\Modules object
     public $options = array();
     
     public function __construct(array $options) 
     {
-        if (!empty($options['mapper'])) {
-            $this->mapper = $options['mapper'];
-            unset($options['mapper']);
+        if (!empty($options['model'])) {
+            $this->model = $options['model'];
+            unset($options['model']);
         } else {
-            $this->mapper = \Modules\Admin\Models\Modules::instance()->getMapper();
+            $this->model = new \Modules\Models\Modules;
         }
         
         $this->options = array() + $options;

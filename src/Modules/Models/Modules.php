@@ -1,133 +1,154 @@
 <?php 
 namespace Modules\Models;
 
-class Modules extends \Dsc\Models\Nodes 
+class Modules extends \Dsc\Mongo\Collections\Describable 
 {
-    use \Dsc\Traits\Models\OrderableItem;
+    use \Dsc\Traits\Models\OrderableCollection;
+
+    public $positions = array();
     
-    protected $collection = 'common.modules';
-    protected $type = 'custom.html'; // for modules, type is used to designate the module type 
-    protected $default_ordering_direction = '1';
-    protected $default_ordering_field = 'metadata.ordering';
+    public $copy; // text
+    public $publication = array(
+        'status' => 'published',
+        'start_date' => null,
+        'start_time' => null,
+        'end_date' => null,
+        'end_time' => null,
+        'start' => null,
+        'end' => null
+    );    
     
-    public function __construct($config=array())
+    protected $__collection_name = 'common.modules';
+    protected $__type = 'core.html::\Modules\Modules\Html\Module';
+    protected $__config = array(
+        'default_sort' => array(
+            'ordering' => 1
+        ),
+    );
+    
+    protected function fetchConditions()
     {
-        parent::__construct($config);
-        
-        $this->filter_fields = array_merge( $this->filter_fields, array(
-            'metadata.ordering'
-        ) );
-    }
-    
-    public function getMapper()
-    {
-        $mapper = null;
-        if ($this->collection) {
-            $mapper = new \Modules\Mappers\Module( $this->getDb(), $this->getCollectionName() );
-        }
-        return $mapper;
-    }
-    
-    protected function fetchFilters()
-    {
-        $this->filters = array();
-    
+        parent::fetchConditions();
+
         $filter_keyword = $this->getState('filter.keyword');
         if ($filter_keyword && is_string($filter_keyword))
         {
             $key =  new \MongoRegex('/'. $filter_keyword .'/i');
-    
+        
             $where = array();
-            $where[] = array('metadata.title'=>$key);
-            $where[] = array('details.copy'=>$key);
+        
+            $regex = '/^[0-9a-z]{24}$/';
+            if (preg_match($regex, (string) $filter_keyword))
+            {
+                $where[] = array('_id'=>new \MongoId((string) $filter_keyword));
+            }
+
+            $where[] = array('title'=>$key);
+            $where[] = array('copy'=>$key);
+            $where[] = array('description'=>$key);
             $where[] = array('metadata.creator.name'=>$key);
-    
-            $this->filters['$or'] = $where;
-        }
-    
-        $filter_id = $this->getState('filter.id');
-        if (strlen($filter_id))
-        {
-            $this->filters['_id'] = new \MongoId((string) $filter_id);
+        
+            $this->setCondition('$or', $where);
         }
         
-        $filter_creator_id = $this->getState('filter.creator.id');
-        if (strlen($filter_creator_id))
+        $filter_copy_contains = $this->getState('filter.copy-contains');
+        if (strlen($filter_copy_contains))
         {
-            $this->filters['metadata.creator.id'] = $filter_creator_id;
+            $key =  new \MongoRegex('/'. $filter_copy_contains .'/i');
+            $this->setCondition('copy', $key);
         }
         
         $filter_type = $this->getState('filter.type');
         if (strlen($filter_type))
         {
-            $this->filters['metadata.type'] = $filter_type;
+            $this->setCondition('type', $filter_type);
         }
         
         $filter_position = $this->getState('filter.position');
         if (strlen($filter_position))
         {
-            $this->filters['metadata.positions'] = $filter_position;
+            $this->setCondition('positions', $filter_position);
         }
         
         $filter_published = $this->getState('filter.published');
-        if ((is_bool($filter_published) && $filter_published) || $filter_published == 'published') {
+        if ($filter_published || (int) $filter_published == 1) {
             // only published items, using both publication dates and published field
-            $this->filters['publication.status'] = 'published';
-            // TODO Set publication date filters
-        } elseif (strlen($filter_published)) {
-            $this->filters['publication.status'] = $filter_published; 
+            $this->setState('filter.publication_status', 'published');
+            $this->setState('filter.published_today', true);
+        
+        } elseif ((is_bool($filter_published) && !$filter_published) || (strlen($filter_published) && (int) $filter_published == 0)) {
+            // only unpublished items
+            $this->setState('filter.publication_status', array( '$ne' => 'published' ));
+            $this->setState('filter.published_today', false);
         }
         
-        return $this->filters;
+        $filter_published_today = $this->getState('filter.published_today');
+        if (strlen($filter_published_today))
+        {
+            // add $and conditions to the query stack
+            if (!$and = $this->getCondition('$and')) {
+                $and = array();
+            }
+        
+            $and[] = array('$or' => array(
+                array('publication.start.time' => null),
+                array('publication.start.time' => array( '$lte' => time() )  )
+            ));
+        
+            $and[] = array('$or' => array(
+                array('publication.end.time' => null),
+                array('publication.end.time' => array( '$gt' => time() )  )
+            ));
+        
+            $this->setCondition('$and', $and);
+        }
+        
+        $filter_status = $this->getState('filter.publication_status');
+        if (!empty($filter_status))
+        {
+            $this->setCondition('publication.status', $filter_status);
+        }
+        
+        return $this;
     }
-    
-    public function save( $values, $options=array(), $mapper=null )
-    {
-        if (isset($values['metadata']['ordering'])) {
-            $values['metadata']['ordering'] = (int) $values['metadata']['ordering'];
-        }
-        
-        if (empty($values['publication']['start'])) {
-            $values['publication']['start'] = \Dsc\Mongo\Metastamp::getDate( $values['publication']['start_date'] . ' ' . $values['publication']['start_time'] );
-        }
-        
-        if (empty($values['publication']['end']) && !empty($values['publication']['end_date'])) {
-            $string = $values['publication']['end_date'];
-            if (!empty($values['publication']['end_time'])) {
-                $string .= ' ' . $values['publication']['end_time']; 
-            }
-            $values['publication']['end'] = \Dsc\Mongo\Metastamp::getDate( trim( $string ) );
-        }
 
-        if (!empty($values['metadata']['positions']) && !is_array($values['metadata']['positions']))
+    protected function beforeSave()
+    {
+        $this->ordering = (int) $this->ordering;
+        
+        if (!empty($this->positions) && !is_array($this->positions))
         {
-            $values['metadata']['positions'] = trim($values['metadata']['positions']);
-            if (!empty($values['metadata']['positions'])) {
-                $values['metadata']['positions'] = \Base::instance()->split( (string) $values['metadata']['positions'] );
+            $this->positions = trim($this->positions);
+            if (!empty($this->positions)) {
+                $this->positions = array_map(function($el){
+                    return strtolower($el);
+                }, \Base::instance()->split( (string) $this->positions ));
             }
         }
-        
-        if (empty($values['metadata']['positions'])) {
-            unset($values['metadata']['positions']);
+        elseif(empty($this->positions) && !is_array($this->positions))
+        {
+            $this->positions = array();
         }
         
-        if (!empty($values['assignment']['routes']['list']) && !is_array($values['assignment']['routes']['list']))
+        if (!empty($this->{'assignment.routes.list'}) && !is_array($this->{'assignment.routes.list'}))
         {
-            $values['assignment']['routes']['list'] = trim($values['assignment']['routes']['list']);
-            if (!empty($values['assignment']['routes']['list'])) {
-                $values['assignment']['routes']['list'] = \Base::instance()->split( (string) $values['assignment']['routes']['list'] );
+            $this->{'assignment.routes.list'} = trim($this->{'assignment.routes.list'});
+            if (!empty($this->{'assignment.routes.list'})) {
+                $this->{'assignment.routes.list'} = \Base::instance()->split( (string) $this->{'assignment.routes.list'} );
             }
         }
-        
-        if (empty($values['assignment']['routes']['list'])) {
-            unset($values['assignment']['routes']['list']);
+        elseif(empty($this->{'assignment.routes.list'}) && !is_array($this->{'assignment.routes.list'})) {
+            $this->{'assignment.routes.list'} = array();
         }
     
-        return parent::save( $values, $options, $mapper );
+        return parent::beforeSave();
     }
     
     /**
+     * Gets an array of all the registered module types
      * 
+     * @param string $group_items
+     * @return multitype:multitype: NULL |unknown
      */
     public function types($group_items=true)
     {
@@ -210,7 +231,12 @@ class Modules extends \Dsc\Models\Nodes
         return $types;
     }
     
-    public function positions()
+    /**
+     * Module positions registered with the system
+     * 
+     * @return unknown
+     */
+    public static function positions()
     {
         // Search the registered module folders for the list of modules
         $positions = \Base::instance()->get('dsc.module.positions');
@@ -261,4 +287,89 @@ class Modules extends \Dsc\Models\Nodes
         
         return array('namespace' => $namespace, 'class' => $class);
     }
+    
+    /**
+     * 
+     * @param string $route
+     * @param unknown $options
+     * @return boolean
+     */
+    public function passesAssignments( $route=null, $options=array() )
+    {
+        $result = false;
+        $passes = array();
+    
+        // is it a pass ALL or pass ANY?
+        $method = 'all';
+        if ($this->{'assignment.method'} == 'any') {
+            $method = 'any';
+        }
+    
+        // TODO Get all the assignment classes from the Assignments folder?  Or allow them to be registered somehow?
+        $types = array(
+            'Routes'
+        );
+    
+        foreach ($types as $type)
+        {
+            $classname = "\\Modules\\Assignments\\" . $type;
+            $passes[$type] = $classname::passes( $this, $route, $options );
+            if ($method == 'any' && $passes[$type])
+            {
+                return true;
+            }
+        }
+    
+        if (!in_array(false, $passes, true)) {
+            $result = true;
+        }
+    
+        return $result;
+    }
+    
+    /**
+     * Renders the module's html by triggering its ->html() method
+     * 
+     * @return string
+     */
+    public function render()
+    {
+        // get an instance of this module's class from the ->type property
+        $parts = explode( '::', $this->{'type'} );
+        if (empty($parts[1]) || !class_exists($parts[1])) {
+            return null;
+        }
+    
+        // TODO Give the ability for developers to create their own Chromes
+    
+        // pass this model as part of the $options array in the constructor
+        // return the module's html()
+        if (!$module_html = (new $parts[1](array('model'=>$this)))->html()) {
+            return null;
+        }
+    
+        $module_type = (string) preg_replace('/[^A-Z0-9_.-]/i', '', $parts[0]);
+        $module_type = ltrim($module_type, '.');
+        $module_type = str_replace(array('_', '.'), array('-', '-'), $module_type);
+    
+        $classes = trim('module-wrap clearfix '. $module_type . ' ' . $this->{'display.classes'});
+    
+        $strings = array();
+        $strings[] = '<div class="' . $classes . '" id="module-' . $this->id . '">';
+        if ($this->{'display.title'} == 1 || is_null($this->{'display.title'}) )
+        {
+            $tag = $this->{'display.title_tag'} ? $this->{'display.title_tag'} : 'h4';
+            $strings[] = '<' . $tag . '>';
+            $strings[] = $this->{'title'};
+            $strings[] = '</' . $tag . '>';
+        }
+    
+        $strings[] = '<div class="module-content clearfix">';
+        $strings[] = $module_html;
+        $strings[] = '</div>';
+    
+        $strings[] = '</div>';
+    
+        return implode( '', $strings );
+    }    
 }

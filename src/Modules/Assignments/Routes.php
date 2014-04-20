@@ -1,9 +1,9 @@
 <?php
 namespace Modules\Assignments;
 
-class Routes extends \Prefab
+class Routes extends \Dsc\Singleton
 {
-    public function passes( $module, $route=null, $options=array() )
+    public static function passes( $module, $route=null, $options=array() )
     {
         // if this ruleset is ignored, return null
         if (!in_array($module->{'assignment.routes.method'}, array('include', 'exclude') ) ) 

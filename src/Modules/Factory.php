@@ -43,7 +43,7 @@ class Factory extends \Prefab
     {
         $return = array();
 
-        $model = new \Modules\Admin\Models\Modules;
+        $model = new \Modules\Models\Modules;
         $list = $model->setState('filter.position', $position)->setState('filter.published', true)->getList();
         
         // Run each module in $return through the Assignments check

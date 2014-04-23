@@ -30,12 +30,11 @@ class Admin extends \Prefab
         $tabs[] = 'Megamenu';
         
         $f3 = \Base::instance();
-        $old_ui = $f3->get('UI');
-        $temp_ui = dirname( __FILE__ ) . "/../Admin/Views/";
-        $f3->set('UI', $temp_ui);
         $f3->set('item', $event->getArgument('item'));
-        $content[] = \Dsc\Template::instance()->renderLayout('Modules/Modules/Megamenu/Admin/Views::menuitem.php');
-        $f3->set('UI', $old_ui);
+        
+        \Dsc\System::instance()->get('theme')->registerViewPath( __DIR__ . '/../Admin/Views/', 'Modules/Modules/Megamenu/Admin/Views' );
+        
+        $content[] = \Dsc\System::instance()->get('theme')->renderView('Modules/Modules/Megamenu/Admin/Views::menuitem.php');
     
         $event->setArgument('tabs', $tabs);
         $event->setArgument('content', $content);

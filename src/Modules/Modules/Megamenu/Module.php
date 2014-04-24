@@ -105,6 +105,8 @@ class Module extends \Modules\Abstracts\Module
             $a_class = ' nav-title-normal ';
         }
         
+        $a_class .= $item->class . ' ';
+        
         // OPTION 1
         // is this item at depth == 1 AND (does this item have children or is it a module)?
         // if so, display the current item in an LI.dropdown.mega-menu-{columns-int} > A
@@ -200,9 +202,9 @@ class Module extends \Modules\Abstracts\Module
                     // if it has children, how are we supposed to display the children, grouped (a nested LI) or as a dropdown?
                     // if as a dropdown, add class=dropdown-submenu to this LI
                     if ($child->children && $child->{'megamenu.group_children'} == '0') {
-                        $strings[] = '<li class="' . $width_class . ' dropdown-submenu">';
+                        $strings[] = '<li class="' . trim( $width_class . $child->class ) . ' dropdown-submenu">';
                     } else {
-                        $strings[] = '<li class="' . $width_class . '">';
+                        $strings[] = '<li class="' . trim( $width_class . $child->class ) . '">';
                     }
                     
                     // display the child's content and its children, if any

@@ -257,10 +257,12 @@ class Module extends \Modules\Abstracts\Module
         
         if (!$item->children || (strpos($item->{'details.type'}, 'module-') !== false)) 
         {
+            $a_class = $item->class;
+            
             if ($item->display_type == "title") {
-                $a_class = ' nav-title ';
+                $a_class .= ' nav-title ';
             } else {
-                $a_class = ' nav-title-normal ';
+                $a_class .= ' nav-title-normal ';
             }
             
             if (strpos($item->{'details.type'}, 'module-') !== false) 
@@ -300,11 +302,12 @@ class Module extends \Modules\Abstracts\Module
             if ($item->{'megamenu.group_children'} == '0') {
                 $url = strpos($item->{'details.type'}, 'module-') !== false ? 'javascript:void(0);' : $item->{'details.url'};
                 $data_target = 'dm-' . $item->id;
+                $a_class = $item->class;
                 
                 if ($item->display_type == "title") {
-                    $a_class = ' nav-title ';
+                    $a_class .= ' nav-title ';
                 } else {
-                    $a_class = ' nav-title-normal ';
+                    $a_class .= ' nav-title-normal ';
                 }
                 
                 $strings[] = '<a class="'.$a_class.'" href="' . $url . '" data-target="#' . $data_target . '">';
@@ -325,11 +328,13 @@ class Module extends \Modules\Abstracts\Module
                 else 
             {
             
+                $a_class = $item->class;
+                
                 // else if as a grouped list
                 if ($item->display_type == "title") {
-                    $a_class = ' nav-title ';
+                    $a_class .= ' nav-title ';
                 } else {
-                    $a_class = ' nav-title-normal ';
+                    $a_class .= ' nav-title-normal ';
                 }
                                 
                 $strings[] = '<a class="'.$a_class.'" href="' . $item->{'details.url'} . '">';

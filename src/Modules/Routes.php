@@ -25,7 +25,7 @@ class Routes extends \Dsc\Routes\Group{
 		);
 		$this->addCrudGroup( 'Modules', 'Module' );
 
-		$this->add( '/module/options', 'GET', array(
+		$this->add( '/module/options', 'GET|POST', array(
 				'controller' => 'Module',
 				'action' => 'options',
 				'ajax' => true

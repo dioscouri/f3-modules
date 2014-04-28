@@ -27,7 +27,7 @@ class Admin extends \Prefab
 
     protected function getSelect( $item )
     {
-        $model = new \Admin\Models\Menus();
+        $model = new \Admin\Models\Navigation;
         
         $roots = $model->getRoots();
         

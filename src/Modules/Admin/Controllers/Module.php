@@ -61,7 +61,7 @@ class Module extends \Admin\Controllers\BaseAuth
         \Base::instance()->set('all_positions', $all_positions );
 
         $item = $this->getItem();
-        $type = $item->{'metadata.type'};
+        $type = $item->{'type'};
         
         $view = \Dsc\System::instance()->get('theme');
         $view->event = $view->trigger( 'onDisplayAdminModuleEdit', array( 'module' => $type, 'item' => $item, 'tabs' => array(), 'content' => array() ) );
@@ -87,7 +87,7 @@ class Module extends \Admin\Controllers\BaseAuth
         $data = \Base::instance()->get('REQUEST');
         
         // get the metadata.type
-        if (!$type = \Dsc\ArrayHelper::get($data, 'metadata.type')) {
+        if (!$type = \Dsc\ArrayHelper::get($data, 'type')) {
             return;
         }
 

@@ -32,7 +32,7 @@ class Admin extends \Prefab
         $f3 = \Base::instance();
         $f3->set('item', $event->getArgument('item'));
         
-        $temp_ui = dirname( __FILE__ ) . "/../Admin/Views/";        
+        $temp_ui = dirname( __FILE__ ) . "/./Admin/Views/";        
         
         $content[] = \Dsc\System::instance()->get('theme')
         ->registerViewPath( $temp_ui, 'Modules/Modules/Megamenu/Admin/Views' )

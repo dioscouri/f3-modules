@@ -11,7 +11,7 @@
 	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
         <ul id="sparks" class="list-actions list-unstyled list-inline">
             <li>
-                <a class="btn btn-default" href="/admin/module/create">Add New</a>
+                <a class="btn btn-default" href="./admin/module/create">Add New</a>
             </li>
         </ul>
 	</div>
@@ -58,7 +58,7 @@
                     <div class="input-group">
                         <select id="bulk-actions" name="bulk_action" class="form-control">
                             <option value="null">-Bulk Actions-</option>
-                            <option value="delete" data-action="/admin/shop/collections/delete">Delete</option>
+                            <option value="delete" data-action="./admin/shop/collections/delete">Delete</option>
                         </select>
                         <span class="input-group-btn">
                             <button class="btn btn-default bulk-actions" type="button" data-target="bulk-actions">Apply</button>
@@ -116,7 +116,7 @@
                                 
                     <td class="">
                         <h5>
-                        <a href="/admin/module/edit/<?php echo $item->id; ?>">
+                        <a href="./admin/module/edit/<?php echo $item->id; ?>">
                         <?php echo $item->{'title'}; ?>
                         </a>
                         </h5>
@@ -145,11 +145,11 @@
                     </td>
                                     
                     <td class="text-center">
-                        <a class="btn btn-xs btn-secondary" href="/admin/module/edit/<?php echo $item->id; ?>">
+                        <a class="btn btn-xs btn-secondary" href="./admin/module/edit/<?php echo $item->id; ?>">
                             <i class="fa fa-pencil"></i>
                         </a>
                         &nbsp;
-                        <a class="btn btn-xs btn-danger" data-bootbox="confirm" href="/admin/module/delete/<?php echo $item->id; ?>">
+                        <a class="btn btn-xs btn-danger" data-bootbox="confirm" href="./admin/module/delete/<?php echo $item->id; ?>">
                             <i class="fa fa-times"></i>
                         </a>
                     </td>

@@ -1,4 +1,4 @@
-<script src="/ckeditor/ckeditor.js"></script>
+<script src="./ckeditor/ckeditor.js"></script>
 <script>
 jQuery(document).ready(function(){
     CKEDITOR.replaceAll( 'wysiwyg' );    
@@ -35,7 +35,7 @@ jQuery(document).ready(function(){
                         </ul>
                     </div>                          
                     &nbsp;
-                    <a class="btn btn-default" href="/admin/modules">Cancel</a>
+                    <a class="btn btn-default" href="./admin/modules">Cancel</a>
                 </div>
 
             </div>
@@ -318,7 +318,7 @@ jQuery(document).ready(function(){
         
                             var request = jQuery.ajax({
                                 type: 'post', 
-                                url: '/admin/module/options',
+                                url: './admin/module/options',
                                 data: form_data
                             }).done(function(data){
                                 var lr = jQuery.parseJSON( JSON.stringify(data), false);

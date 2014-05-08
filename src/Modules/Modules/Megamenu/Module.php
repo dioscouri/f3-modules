@@ -127,7 +127,7 @@ class Module extends \Modules\Abstracts\Module
                 // display title?
                 if ($item->display_title == 0) {} else
                 {                
-                    $strings[] = $item->title . '<b class="caret"></b>';
+                    $strings[] = $item->title . ' <b class="caret"></b>';
                 }
                 
                 if ($item->display_subtitle && $item->{'details.subtitle'})

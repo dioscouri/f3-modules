@@ -5,19 +5,28 @@ class Listener extends \Prefab
 {
     public function onSystemRebuildMenu( $event )
     {
-        if ($mapper = $event->getArgument('mapper')) 
-        {
-            $mapper->reset();
-            $mapper->priority = 40;
-            $mapper->id = 'f3-modules';
-            $mapper->title = 'Modules';
-            $mapper->route = '';
-            $mapper->icon = 'fa fa-building';
-            $mapper->children = array(
-                    json_decode(json_encode(array( 'title'=>'List', 'route'=>'/admin/modules', 'icon'=>'fa fa-list' )))
-                    ,json_decode(json_encode(array( 'title'=>'Add New', 'route'=>'/admin/module/create', 'icon'=>'fa fa-plus' )))
+    	if ($model = $event->getArgument('model'))
+    	{
+    		$root = $event->getArgument( 'root' );
+    		$modules = clone $model;
+    	
+    		$modules->insert(
+    				array(
+    						'type'	=> 'admin.nav',
+    						'priority' => 80,
+    						'title'	=> 'Modules',
+    						'icon'	=> 'fa fa-building',
+        					'is_root' => false,
+    						'tree'	=> $root,
+							'base' => '/admin/modules',
+    				)
+    		);
+    		
+            $children = array(
+                    array( 'title'=>'List', 'route'=>'/admin/modules', 'icon'=>'fa fa-list' ),
+                    array( 'title'=>'Add New', 'route'=>'/admin/module/create', 'icon'=>'fa fa-plus' ),
             );
-            $mapper->save();
+           	$modules->addChildrenItems( $children, $root, $model );
             
             \Dsc\System::instance()->addMessage('Modules added its admin menu items.');
         }

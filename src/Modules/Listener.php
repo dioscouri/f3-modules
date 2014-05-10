@@ -26,7 +26,7 @@ class Listener extends \Prefab
                     array( 'title'=>'List', 'route'=>'/admin/modules', 'icon'=>'fa fa-list' ),
                     array( 'title'=>'Add New', 'route'=>'/admin/module/create', 'icon'=>'fa fa-plus' ),
             );
-           	$modules->addChildrenItems( $children, $root, $model );
+           	$modules->addChildrenItems( $children, $root );
             
             \Dsc\System::instance()->addMessage('Modules added its admin menu items.');
         }

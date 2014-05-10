@@ -58,7 +58,7 @@
                     <div class="input-group">
                         <select id="bulk-actions" name="bulk_action" class="form-control">
                             <option value="null">-Bulk Actions-</option>
-                            <option value="delete" data-action="./admin/shop/collections/delete">Delete</option>
+                            <option value="delete" data-action="./admin/modules/delete">Delete</option>
                         </select>
                         <span class="input-group-btn">
                             <button class="btn btn-default bulk-actions" type="button" data-target="bulk-actions">Apply</button>

@@ -69,8 +69,9 @@ class Factory extends \Prefab
      */
     public static function render( $position, $route=null, $options=array() )
     {
-        $contents = array();
-        foreach (self::load($position, $route, $options) as $module) 
+    	$route = explode( '?', (string)$route );
+    	$contents = array();
+        foreach (self::load($position, $route[0], $options) as $module) 
         {
             $contents[] = $module->render();
         }

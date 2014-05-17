@@ -14,15 +14,14 @@ class Modules extends \Admin\Controllers\BaseAuth
 	
     public function index()
     {
-        \Base::instance()->set('pagetitle', 'Modules');
-        \Base::instance()->set('subtitle', '');
-        
         $model = $this->getModel();
         $state = $model->populateState()->getState();
         \Base::instance()->set('state', $state );
         
         $paginated = $model->paginate();
         \Base::instance()->set('paginated', $paginated );
+
+        $this->app->set('meta.title', 'Modules');
         
         $view = \Dsc\System::instance()->get('theme');
         echo $view->render('Modules/Admin/Views::modules/list.php');

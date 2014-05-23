@@ -3,7 +3,8 @@ namespace Modules\Admin\Controllers;
 
 class Module extends \Admin\Controllers\BaseAuth 
 {
-    use \Dsc\Traits\Controllers\OrderableItemCollection;
+    use \Dsc\Traits\Controllers\CrudItemCollection, 
+        \Dsc\Traits\Controllers\OrderableItemCollection;
 
     protected $list_route = '/admin/modules';
     protected $create_item_route = '/admin/module/create';

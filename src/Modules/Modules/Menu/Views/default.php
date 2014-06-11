@@ -14,7 +14,7 @@ $found = false;
 foreach ($list as $key => $item) 
 {
     $class = !empty($item->class) ? $item->class : 'menu-item';
-    if (strpos($item->{'details.url'}, $PARAMS[0]) !== false && !$found) {
+    if (strpos($item->{'details.url'}, $this->app->get('PARAMS.0')) !== false && !$found) {
         $found = true;
         $class .= " active current";
     }

@@ -23,19 +23,34 @@
         
         <div class="row">
             <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-                <?php /* ?>
-                <ul class="list-filters list-unstyled list-inline">
-                    <li>
-                        <a class="btn btn-link">Advanced Filtering</a>
-                    </li>                
-                    <li>
-                        <a class="btn btn-link">Quicklink Filter</a>
-                    </li>
-                    <li>
-                        <a class="btn btn-link">Quicklink Filter</a>
-                    </li>                    
-                </ul>
-                */ ?>
+            
+                <div class="row">
+                    <div class="col-md-3">
+                        <select name="filter[type]" class="form-control" onchange="this.form.submit();">
+                            <option value="">All Types</option>
+                            <?php foreach (\Modules\Models\Modules::distinctTypes() as $type) { ?>
+                            	<option value="<?php echo $type; ?>" <?php if ($state->get('filter.type') == $type) { echo "selected='selected'"; } ?>><?php echo $type; ?></option>
+                            <?php } ?>                            
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="filter[position]" class="form-control" onchange="this.form.submit();">
+                            <option value="">All Positions</option>
+                            <?php foreach (\Modules\Models\Modules::positions() as $type) { ?>
+                            	<option value="<?php echo $type; ?>" <?php if ($state->get('filter.position') == $type) { echo "selected='selected'"; } ?>><?php echo $type; ?></option>
+                            <?php } ?>                            
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="filter[route]" class="form-control" onchange="this.form.submit();">
+                            <option value="">All Routes</option>
+                            <?php foreach (\Modules\Models\Modules::distinctRoutes() as $type) { ?>
+                            	<option value="<?php echo $type; ?>" <?php if ($state->get('filter.route') == $type) { echo "selected='selected'"; } ?>><?php echo $type; ?></option>
+                            <?php } ?>                            
+                        </select>
+                    </div>                    
+                </div>
+                
             </div>
             <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
                 <div class="form-group">
@@ -97,10 +112,8 @@
     			<tr>
     			    <th class="checkbox-column"><input type="checkbox" class="icheck-input"></th>
     				<th data-sortable="title">Title</th>
-    				<th data-sortable="type">Type</th>
-    				<th>Positions</th>
-    				<th data-sortable="ordering">Order</th>
-    				<th>Status</th>				
+    				<th class="col-md-1" data-sortable="ordering">Order</th>
+    				<th class="col-md-1" data-sortable="publication.status">Status</th>				
     				<th class="col-md-1"></th>
     			</tr>
     		</thead>
@@ -116,32 +129,55 @@
                                 
                     <td class="">
                         <h5>
-                        <a href="./admin/module/edit/<?php echo $item->id; ?>">
-                        <?php echo $item->{'title'}; ?>
-                        </a>
+                            <a href="./admin/module/edit/<?php echo $item->id; ?>">
+                            <?php echo $item->{'title'}; ?>
+                            </a>
                         </h5>
                         
                         <p class="help-block">
                         <?php echo $item->{'description'}; ?>
                         </p>
-                    </td>
-    
-                    <td class="">
-                    <?php echo substr( $item->{'type'}, 0, strpos( $item->{'type'}, '::' ) ); ?>
+                        
+                        <p>
+                            <label>Type:</label>
+                            <span class="label label-default"><?php echo substr( $item->{'type'}, 0, strpos( $item->{'type'}, '::' ) ); ?></span>
+                        </p>                        
+                        
+                        <?php if (!empty($item->positions)) { ?>
+                        <p>
+                        <label>Positions: </label>
+                        <?php echo '<span class="label label-info">' . implode("</span> <span class='label label-info'>", (array) $item->positions) . '</span>'; ?>                    
+                        </p>
+                        <?php } ?>
+
+                        <?php if (!empty($item->{'assignment.routes.list'})) { ?>
+                        <p>
+                        <label>Routes:</label>
+                        <?php echo '<span class="label label-success">' . implode("</span> <span class='label label-success'>", (array) $item->{'assignment.routes.list'}) . '</span>'; ?>                    
+                        </p>
+                        <?php } ?>
                     </td>
                     
-                    <td class="">
-                    <?php echo implode(", ", (array) $item->{'positions'} ); ?>
-                    </td>
-    
                     <td class="">
                     <?php echo (int) $item->{'ordering'}; ?>
                     </td>
                     
                     <td class="">
-                        <div><?php echo ucwords( $item->{'publication.status'} ); ?></div>
-                        <div><?php if ($item->{'publication.start_date'}) { echo "Up: " . $item->{'publication.start_date'}; } ?></div>
-                        <div><?php if ($item->{'publication.end_date'}) { echo "Down: " . $item->{'publication.end_date'}; } ?></div>
+                        <p>
+                            <span class="label <?php echo $item->publishableStatusLabel(); ?>">
+                            <?php echo $item->{'publication.status'}; ?>
+                            </span>				                            	
+                        </p>
+                        <?php if ($item->{'publication.start_date'}) { ?>
+                        <div>
+                        	<label>Up:</label> <?php echo $item->{'publication.start_date'}; ?>
+                        </div>
+                        <?php } ?>
+                        <?php if ($item->{'publication.end_date'}) { ?>
+                        <div>
+                        	<label>Down:</label> <?php echo $item->{'publication.end_date'}; ?>
+                        </div>
+                        <?php } ?>                    
                     </td>
                                     
                     <td class="text-center">

@@ -59,6 +59,12 @@ class Modules extends \Dsc\Mongo\Collections\Content
             $this->setCondition('positions', $filter_position);
         }
         
+        $filter_route = $this->getState('filter.route');
+        if (strlen($filter_route))
+        {
+            $this->setCondition('assignment.routes.list', $filter_route);
+        }
+        
         $filter_published = $this->getState('filter.published');
         if ($filter_published || (int) $filter_published == 1) {
             // only published items, using both publication dates and published field
@@ -369,16 +375,47 @@ class Modules extends \Dsc\Mongo\Collections\Content
     {
         $image = (!empty($this->{'featured_image.slug'})) ? './asset/thumb/' . $this->{'featured_image.slug'} : null;
         $published_status = '<span class="label ' . $this->publishableStatusLabel() . '">' . $this->{'publication.status'} . '</span>';
-            
+        $positions = !empty($this->positions) ? '<span class="label label-info">' . implode("</span> <span class='label label-info'>", (array) $this->positions) . '</span>' : null;
+        
         $item = new \Search\Models\Item(array(
             'url' => './admin/module/edit/' . $this->id,
             'title' => $this->title,
             'subtitle' => $this->description,
             'image' => $image,
-            'summary' => null,
+            'summary' => $positions,
             'datetime' => $published_status . ' ' . date('Y-m-d', $this->{'publication.start.time'} ),
         ));
     
         return $item;
+    }
+    
+    /**
+     *
+     * @param array $types
+     * @return unknown
+     */
+    public static function distinctTypes($query=array())
+    {
+        $model = new static();
+        $distinct = $model->collection()->distinct("type", $query);
+        $distinct = array_values( array_filter( $distinct ) );
+        sort($distinct);
+        
+        return $distinct;
+    }
+    
+    /**
+     *
+     * @param array $types
+     * @return unknown
+     */
+    public static function distinctRoutes($query=array())
+    {
+        $model = new static();
+        $distinct = $model->collection()->distinct("assignment.routes.list", $query);
+        $distinct = array_values( array_filter( $distinct ) );
+        sort($distinct);
+    
+        return $distinct;
     }
 }

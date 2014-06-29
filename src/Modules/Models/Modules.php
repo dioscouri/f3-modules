@@ -1,22 +1,11 @@
 <?php 
 namespace Modules\Models;
 
-class Modules extends \Dsc\Mongo\Collections\Describable 
+class Modules extends \Dsc\Mongo\Collections\Content 
 {
     use \Dsc\Traits\Models\OrderableCollection;
 
     public $positions = array();
-    
-    public $copy; // text
-    public $publication = array(
-        'status' => 'published',
-        'start_date' => null,
-        'start_time' => null,
-        'end_date' => null,
-        'end_time' => null,
-        'start' => null,
-        'end' => null
-    );    
     
     protected $__collection_name = 'common.modules';
     protected $__type = 'core.html::\Modules\Modules\Html\Module';
@@ -371,5 +360,25 @@ class Modules extends \Dsc\Mongo\Collections\Describable
         $strings[] = '</div>';
     
         return implode( '', $strings );
-    }    
+    }
+
+    /**
+     * Converts this to a search item, used in the search template when displaying each search result
+     */
+    public function toAdminSearchItem()
+    {
+        $image = (!empty($this->{'featured_image.slug'})) ? './asset/thumb/' . $this->{'featured_image.slug'} : null;
+        $published_status = '<span class="label ' . $this->publishableStatusLabel() . '">' . $this->{'publication.status'} . '</span>';
+            
+        $item = new \Search\Models\Item(array(
+            'url' => './admin/module/edit/' . $this->id,
+            'title' => $this->title,
+            'subtitle' => $this->description,
+            'image' => $image,
+            'summary' => null,
+            'datetime' => $published_status . ' ' . date('Y-m-d', $this->{'publication.start.time'} ),
+        ));
+    
+        return $item;
+    }
 }

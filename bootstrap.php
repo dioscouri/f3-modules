@@ -11,7 +11,8 @@ class ModulesBootstrap extends \Dsc\Bootstrap
             \Search\Factory::registerSource(new \Search\Models\Source(array(
                 'id' => 'modules',
                 'title' => 'Modules',
-                'class' => '\Modules\Models\Modules'
+                'class' => '\Modules\Models\Modules',
+                'priority' => 40,
             )));
         }    
     }

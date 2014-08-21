@@ -230,73 +230,14 @@ jQuery(document).ready(function(){
                                         
                 </div>
                 <!-- /.tab-pane -->
-                                
-                <div class="tab-pane" id="tab-assignment">
-                    <script>
-                    jQuery(document).ready(function(){
-                        ModuleAssignmentsSwitcher();
-                    });
-
-                    ModuleAssignmentsSwitcher = function() {
-                        jQuery('.ruleset-switcher').change(function(){
-                            e = jQuery(this);
-                            val = e.val();
-                            id = e.parents('.ruleset').attr('id');
-                            if (id) {
-                                if (val == 'ignore') {
-                                    jQuery('#' + id + ' .ruleset-options > .enabled').slideUp().removeClass('hidden');
-                                    jQuery('#' + id + ' .ruleset-options > .disabled').slideDown().removeClass('hidden');
-                                } else {
-                                    jQuery('#' + id + ' .ruleset-options > .enabled').slideDown().removeClass('hidden');
-                                    jQuery('#' + id + ' .ruleset-options > .disabled').slideUp().removeClass('hidden');                                    
-                                }
-                            }
-                        });
-                    }
-                    </script>
                 
-                    <div class="form-group">
-                        <label class="col-md-2">Method</label>
-                        
-                        <div class="col-md-2">
-                            <select name="assignment[method]" class="form-control">
-                                <option value="all" <?php if ($flash->old('assignment.method') == "all") { echo "selected='selected'"; } ?>>All</option>
-                                <option value="any" <?php if ($flash->old('assignment.method') == "any") { echo "selected='selected'"; } ?>>Any</option>
-                            </select>
-                        </div>
-                        
-                        <p class="help-block">Set this to ALL if ALL of the rules below must be matched for the module to display.</p>
-                        <p class="help-block">Set this to ANY if the module should display when ANY of the rules below is matched.</p>
-                    </div>
-                    <!-- /.form-group -->                    
-        
-                    <div id="ruleset-routes" class="portlet ruleset">
-        
-                        <div class="portlet-header">
-                            <h3>Routes</h3>
-                            <div class="col-md-2 pull-right portlet-tools">
-                                <select name="assignment[routes][method]" class="form-control ruleset-switcher">
-                                    <option value="ignore" <?php if ($flash->old('assignment.routes.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore</option>
-                                    <option value="include" <?php if ($flash->old('assignment.routes.method') == "include") { echo "selected='selected'"; } ?>>Include</option>
-                                    <option value="exclude" <?php if ($flash->old('assignment.routes.method') == "exclude") { echo "selected='selected'"; } ?>>Exclude</option>
-                                </select>
-                            </div>                            
-                        </div>
-                        <!-- /.portlet-header -->
-        
-                        <div class="portlet-content ruleset-options">
-                            <div class="enabled <?php if (!in_array($flash->old('assignment.routes.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
-                                <input name="assignment[routes][list]" data-tags='[]' value="<?php echo implode(",", (array) $flash->old('assignment.routes.list') ); ?>" type="text" class="form-control ui-select2-tags" />
-                            </div>                        
-                            <div class="text-muted disabled <?php if (in_array($flash->old('assignment.routes.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
-                                This ruleset is ignored.
-                            </div>
-                        </div>
-                    </div>
+                <div class="tab-pane" id="tab-assignment">
+                
+                    <?php echo $this->renderLayout('Modules/Admin/Views::modules/fields_exclusions.php'); ?>
                 
                 </div>
-                <!-- /.tab-pane -->
-                
+                <!-- /.tab-pane -->                
+                                
                 <div class="tab-pane" id="tab-options">
                     <div class="form-group">
                         <label>Type</label>

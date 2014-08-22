@@ -302,7 +302,8 @@ class Modules extends \Dsc\Mongo\Collections\Content
     
         // TODO Get all the assignment classes from the Assignments folder?  Or allow them to be registered somehow?
         $types = array(
-            'Routes'
+            'Routes',
+            'Groups'
         );
     
         foreach ($types as $type)

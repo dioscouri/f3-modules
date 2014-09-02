@@ -15,20 +15,32 @@ class Routes extends \Dsc\Singleton
             return true;
         }
         
+        $match = false;
+        
         // get the list of urls to match $route against
         // if any of them match, return true
         $patterns = (array) $module->{'assignment.routes.list'};
         if (empty($patterns)) {
-            return true;
+            $match = true;
         }
         
         foreach ($patterns as $pattern) 
         {
             if (fnmatch($pattern, $route)) {
-                return true;
+                $match = true;
             }
         }        
         
-        return false;
+        switch ($module->{'assignment.routes.method'})
+        {
+            case "exclude":
+                $passes = $match ? false : true;
+                break;
+            default:
+                $passes = $match;
+                break;
+        }
+        
+        return $passes;
     }
 }

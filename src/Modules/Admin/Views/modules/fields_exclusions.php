@@ -184,10 +184,10 @@ ModuleAssignmentsSwitch = function(e) {
                             <select name="assignment[referers][list]" class="form-control ui-select2" multiple="multiple">
                             <?php 
                             echo \Dsc\Html\Select::options(array(
-                                array('value'=>'email', 'text'=>'Email'),
+                                array('value'=>'email', 'text'=>'All Recognized Email Clients'),
                                 array('value'=>'search', 'text'=>'All Recognized Search Engines'),
-                                array('value'=>'google', 'text'=>'Google'),
                                 array('value'=>'social', 'text'=>'All Recognized Social Platforms'),
+                                array('value'=>'google', 'text'=>'Google'),
                                 array('value'=>'facebook', 'text'=>'Facebook'),
                                 array('value'=>'other', 'text'=>'Other'),
                             ), $flash->old('assignment.referers.list')); 

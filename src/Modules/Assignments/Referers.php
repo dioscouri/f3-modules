@@ -10,45 +10,80 @@ class Referers extends \Dsc\Singleton
         {
             return null;
         }
-        
-        return null;
 
+        $referer = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $parser = (new \Snowplow\RefererParser\Parser)->parse($referer);        
+        
         $match = false;
-        $patterns = array();
         
         $list = (array) $module->{'assignment.referers.list'};
-        if (in_array('other', $list)) 
-        {
-            $patterns = (array) $module->{'assignment.referers.others'};
-        }
-        
         foreach ($list as $shortcut_referer) 
         {
             switch ($shortcut_referer) 
             {
                 case "email":
+                    if ($parser->isKnown()) 
+                    {
+                        if ($parser->getMedium() == 'email') 
+                        {
+                            $match = true;
+                        }
+                    }                    
                     break;
                 case "search":
-                    break;
-                case "google":
+                    if ($parser->isKnown())
+                    {
+                        if ($parser->getMedium() == 'search')
+                        {
+                            $match = true;
+                        }
+                    }                    
                     break;
                 case "social":
+                    if ($parser->isKnown())
+                    {
+                        if ($parser->getMedium() == 'social')
+                        {
+                            $match = true;
+                        }
+                    }                    
                     break;
+                case "google":
+                    if ($parser->isKnown())
+                    {
+                        if (strtolower($parser->getSource()) == 'google')
+                        {
+                            $match = true;
+                        }
+                    }                    
+                    break;                    
                 case "facebook":
+                    if ($parser->isKnown())
+                    {
+                        if (strtolower($parser->getSource()) == 'facebook')
+                        {
+                            $match = true;
+                        }
+                    }                    
                     break;
             }
         }
         
-        if (empty($patterns)) {
-            $match = true;
-        }
-        
-        foreach ($patterns as $pattern) 
+        if (empty($match)) 
         {
-            if (strpos($referer, $pattern) !== false) {
-                $match = true;
+            $patterns = array();
+            if (in_array('other', $list))
+            {
+                $patterns = (array) $module->{'assignment.referers.others'};
             }
-        }        
+                        
+            foreach ($patterns as $pattern)
+            {
+                if (strpos($referer, $pattern) !== false) {
+                    $match = true;
+                }
+            }
+        }
         
         switch ($module->{'assignment.referers.method'})
         {

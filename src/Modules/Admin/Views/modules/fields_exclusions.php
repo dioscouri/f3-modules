@@ -74,7 +74,7 @@ ModuleAssignmentsSwitch = function(e) {
         <div class="row">
             <div class="col-md-3">
                 <select name="assignment[routes][method]" class="form-control ruleset-switcher">
-                    <option value="ignore" <?php if ($flash->old('assignment.routes.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore</option>
+                    <option value="ignore" <?php if ($flash->old('assignment.routes.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this ruleset</option>
                     <option value="include" <?php if ($flash->old('assignment.routes.method') == "include") { echo "selected='selected'"; } ?>>Include</option>
                     <option value="exclude" <?php if ($flash->old('assignment.routes.method') == "exclude") { echo "selected='selected'"; } ?>>Exclude</option>
                 </select>                
@@ -113,7 +113,7 @@ ModuleAssignmentsSwitch = function(e) {
         <div class="row">
             <div class="col-md-3">
                 <select name="assignment[groups][method]" class="form-control ruleset-switcher">
-                    <option value="ignore" <?php if ($flash->old('assignment.groups.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore</option>
+                    <option value="ignore" <?php if ($flash->old('assignment.groups.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this ruleset</option>
                     <option value="one" <?php if ($flash->old('assignment.groups.method') == "one") { echo "selected='selected'"; } ?>>At least one</option>
                     <option value="all" <?php if ($flash->old('assignment.groups.method') == "all") { echo "selected='selected'"; } ?>>Must be in all</option>
                     <option value="none" <?php if ($flash->old('assignment.groups.method') == "none") { echo "selected='selected'"; } ?>>Cannot be in any</option>
@@ -154,3 +154,72 @@ ModuleAssignmentsSwitch = function(e) {
     
 </div>
 <!-- /.row -->
+
+<hr />
+
+<div id="ruleset-referers" class="ruleset row">
+    
+    <div class="col-md-2">
+        
+        <h3>Visited from</h3>
+        <p class="help-block">Show/Hide this module depending on the visitor's referrer</p>
+                            
+    </div>
+    <!-- /.col-md-2 -->
+                
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3">
+                <select name="assignment[referers][method]" class="form-control ruleset-switcher">
+                    <option value="ignore" <?php if ($flash->old('assignment.referers.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this ruleset</option>
+                    <option value="include" <?php if ($flash->old('assignment.referers.method') == "include") { echo "selected='selected'"; } ?>>Display to visitors from...</option>
+                    <option value="exclude" <?php if ($flash->old('assignment.referers.method') == "exclude") { echo "selected='selected'"; } ?>>Display to all visitors except those from...</option>
+                </select>                
+            </div>
+            <div class="col-md-9">
+            
+                <div class="ruleset-options">                
+                    <div class="ruleset-enabled <?php if (!in_array($flash->old('assignment.referers.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
+                        <div class="form-group">
+                            <select name="assignment[referers][list]" class="form-control ui-select2" multiple="multiple">
+                            <?php 
+                            echo \Dsc\Html\Select::options(array(
+                                array('value'=>'email', 'text'=>'Email'),
+                                array('value'=>'search', 'text'=>'All Recognized Search Engines'),
+                                array('value'=>'google', 'text'=>'Google'),
+                                array('value'=>'social', 'text'=>'All Recognized Social Platforms'),
+                                array('value'=>'facebook', 'text'=>'Facebook'),
+                                array('value'=>'other', 'text'=>'Other'),
+                            ), $flash->old('assignment.referers.list')); 
+                            ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="help-block">If you selected 'Other', please provide the strings that we should search for in the referring URL:</label>
+                            <input name="assignment[referers][others]" data-tags='[]' value="<?php echo implode(",", (array) $flash->old('assignment.referers.others') ); ?>" type="text" class="form-control ui-select2-tags" placeholder="e.g. utm, source, or wordpress.org"/>                            
+                        </div>
+                    </div>                        
+                    <div class="text-muted ruleset-disabled <?php if (in_array($flash->old('assignment.referers.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
+                        This ruleset is ignored.
+                    </div>                                  
+                </div>              
+                  
+            </div>    
+        </div>
+    </div>
+    <!-- /.col-md-10 -->
+    
+</div>
+<!-- /.row -->
+
+<?php 
+if ($conditions = (new \Modules\Models\Conditions)->getItems())
+{
+    foreach ($conditions as $condition)
+    {
+        echo "<hr/>";
+        echo $condition->getClass()->html();
+    }
+}
+?>

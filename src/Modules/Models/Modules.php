@@ -135,6 +135,28 @@ class Modules extends \Dsc\Mongo\Collections\Content
         elseif(empty($this->{'assignment.routes.list'}) && !is_array($this->{'assignment.routes.list'})) {
             $this->{'assignment.routes.list'} = array();
         }
+        
+        if (!empty($this->{'assignment.referers.list'}) && !is_array($this->{'assignment.referers.list'}))
+        {
+            $this->{'assignment.referers.list'} = trim($this->{'assignment.referers.list'});
+            if (!empty($this->{'assignment.referers.list'})) {
+                $this->{'assignment.referers.list'} = \Base::instance()->split( (string) $this->{'assignment.referers.list'} );
+            }
+        }
+        elseif(empty($this->{'assignment.referers.list'}) && !is_array($this->{'assignment.referers.list'})) {
+            $this->{'assignment.referers.list'} = array();
+        }
+        
+        if (!empty($this->{'assignment.referers.others'}) && !is_array($this->{'assignment.referers.others'}))
+        {
+            $this->{'assignment.referers.others'} = trim($this->{'assignment.referers.others'});
+            if (!empty($this->{'assignment.referers.others'})) {
+                $this->{'assignment.referers.others'} = \Base::instance()->split( (string) $this->{'assignment.referers.others'} );
+            }
+        }
+        elseif(empty($this->{'assignment.referers.others'}) && !is_array($this->{'assignment.referers.others'})) {
+            $this->{'assignment.referers.others'} = array();
+        }
     
         return parent::beforeSave();
     }
@@ -300,21 +322,35 @@ class Modules extends \Dsc\Mongo\Collections\Content
             $method = 'any';
         }
     
-        // TODO Get all the assignment classes from the Assignments folder?  Or allow them to be registered somehow?
+        // Core conditions
         $types = array(
             'Routes',
+            'Referers',
             'Groups'
         );
     
         foreach ($types as $type)
         {
             $classname = "\\Modules\\Assignments\\" . $type;
-            $passes[$type] = $classname::passes( $this, $route, $options );
-            if ($method == 'any' && $passes[$type])
+            $passes["core-" . $type] = $classname::passes( $this, $route, $options );
+            if ($method == 'any' && $passes["core-" . $type])
             {
                 return true;
             }
         }
+        
+        // now do the same thing for the registered conditions 
+        if ($conditions = (new \Modules\Models\Conditions)->getItems()) 
+        {
+            foreach ($conditions as $condition) 
+            {
+                $passes[$condition->namespace] = $condition->getClass()->passes( $this, $route, $options );
+                if ($method == 'any' && $passes[$condition->namespace])
+                {
+                    return true;
+                }                
+            }
+        }        
     
         if (!in_array(false, $passes, true)) {
             $result = true;

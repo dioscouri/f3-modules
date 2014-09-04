@@ -14,7 +14,14 @@ class ModulesBootstrap extends \Dsc\Bootstrap
                 'class' => '\Modules\Models\Modules',
                 'priority' => 40,
             )));
-        }    
+        }
+
+        $path = $this->app->hive()['PATH'];
+        if (strpos($path, '/admin/module/edit') !== false)
+        {
+            // Bootstrap the reports
+            \Modules\Models\Conditions::bootstrap();
+        }
     }
 }
 

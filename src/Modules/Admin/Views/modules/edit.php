@@ -145,7 +145,7 @@ jQuery(document).ready(function(){
             
                             <div class="portlet-content">
                             
-                                <div class="input-group">
+                                <div class="form-group">
                                     <input name="positions" data-tags='<?php echo json_encode( $all_positions ); ?>' value="<?php echo implode(",", (array) $flash->old('positions') ); ?>" type="text" class="form-control ui-select2-tags" /> 
                                 </div>
                                 <!-- /.form-group -->

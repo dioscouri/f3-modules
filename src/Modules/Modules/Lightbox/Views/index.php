@@ -31,6 +31,10 @@ switch ( $module->model->{'lightbox.frequency'})
 }
 ?>
 
+<div id="lightbox-<?php echo $module->model->id; ?>" class="hidden">
+    <?php echo $module->model->{'copy'}; ?>
+</div>
+
 <script>
 jQuery(document).ready(function() {
     
@@ -42,7 +46,7 @@ jQuery(document).ready(function() {
             <?php if ($module->model->{'lightbox.title_enabled'} == 1) { ?>
             title: "<?php echo $module->model->title; ?>",
             <?php } ?>
-            message: '<?php echo $module->model->{'copy'}; ?>' 
+            message: jQuery('#lightbox-<?php echo $module->model->id; ?>').html()
         });
      
     <?php } else { ?>

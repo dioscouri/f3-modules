@@ -1,3 +1,7 @@
+<?php if (empty($flash)) {
+    $flash = \Dsc\Flash::instance();
+} ?>
+
 <p class="alert alert-warning"><b>Important:</b> In the "Display" tab, set "Display Title" = No.  This will prevent the module's title from displaying inappropriately.</p> 
 
 <div class="row">

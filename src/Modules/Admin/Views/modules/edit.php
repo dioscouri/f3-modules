@@ -51,10 +51,10 @@ jQuery(document).ready(function(){
                     <a href="#tab-display" data-toggle="tab"> Display </a>
                 </li>                
                 <li>
-                    <a href="#tab-assignment" data-toggle="tab"> Assignment </a>
+                    <a href="#tab-conditions" data-toggle="tab"> Conditions </a>
                 </li>
                 <li>
-                    <a href="#tab-options" data-toggle="tab"> Options </a>
+                    <a href="#tab-options" data-toggle="tab"> Type </a>
                 </li>                
             </ul>
             
@@ -231,16 +231,16 @@ jQuery(document).ready(function(){
                 </div>
                 <!-- /.tab-pane -->
                 
-                <div class="tab-pane" id="tab-assignment">
+                <div class="tab-pane" id="tab-conditions">
                 
-                    <?php echo $this->renderLayout('Modules/Admin/Views::modules/fields_exclusions.php'); ?>
+                    <?php echo $this->renderLayout('Modules/Admin/Views::modules/fields_conditions.php'); ?>
                 
                 </div>
                 <!-- /.tab-pane -->                
                                 
                 <div class="tab-pane" id="tab-options">
                     <div class="form-group">
-                        <label>Type</label>
+                        <label>Select a Type</label>
                         <select name="type" class="form-control" onchange="ModulesGetOptions();">
                         <?php foreach ($grouped_types as $key=>$types) { ?>
                             <optgroup label="<?php echo $key; ?>">

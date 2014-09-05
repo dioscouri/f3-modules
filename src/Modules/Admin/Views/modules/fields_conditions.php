@@ -43,12 +43,12 @@ ModuleAssignmentsSwitch = function(e) {
         <div class="row">
             <div class="col-md-3">
                 <select name="assignment[method]" class="form-control">
-                    <option value="all" <?php if ($flash->old('assignment.method') == "all") { echo "selected='selected'"; } ?>>All</option>
-                    <option value="any" <?php if ($flash->old('assignment.method') == "any") { echo "selected='selected'"; } ?>>Any</option>
+                    <option value="all" <?php if ($flash->old('assignment.method') == "all") { echo "selected='selected'"; } ?>>All conditions must be satisfied</option>
+                    <option value="any" <?php if ($flash->old('assignment.method') == "any") { echo "selected='selected'"; } ?>>Any condition is matched</option>
                 </select>            
             </div>
             <div class="col-md-9">
-                <p class="help-block">Use <b>ALL</b> if <u>all of the rules below</u> must be matched for the module to display. Use <b>ANY</b> if the module should display when <u>any of the rules below</u> is matched.</p>
+                <p class="help-block">Select <b>ALL</b> if <u>all of the conditions below</u> must be matched for the module to display. Select <b>ANY</b> if the module should display when <u>any of the conditions below</u> is matched.</p>
             </div>
         </div>
         
@@ -74,7 +74,7 @@ ModuleAssignmentsSwitch = function(e) {
         <div class="row">
             <div class="col-md-3">
                 <select name="assignment[routes][method]" class="form-control ruleset-switcher">
-                    <option value="ignore" <?php if ($flash->old('assignment.routes.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this ruleset</option>
+                    <option value="ignore" <?php if ($flash->old('assignment.routes.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this condition</option>
                     <option value="include" <?php if ($flash->old('assignment.routes.method') == "include") { echo "selected='selected'"; } ?>>Include</option>
                     <option value="exclude" <?php if ($flash->old('assignment.routes.method') == "exclude") { echo "selected='selected'"; } ?>>Exclude</option>
                 </select>                
@@ -86,7 +86,7 @@ ModuleAssignmentsSwitch = function(e) {
                         <input name="assignment[routes][list]" data-tags='[]' value="<?php echo implode(",", (array) $flash->old('assignment.routes.list') ); ?>" type="text" class="form-control ui-select2-tags" />
                     </div>                        
                     <div class="text-muted ruleset-disabled <?php if (in_array($flash->old('assignment.routes.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
-                        This ruleset is ignored.
+                        This condition is ignored.
                     </div>                                  
                 </div>              
                   
@@ -113,7 +113,7 @@ ModuleAssignmentsSwitch = function(e) {
         <div class="row">
             <div class="col-md-3">
                 <select name="assignment[groups][method]" class="form-control ruleset-switcher">
-                    <option value="ignore" <?php if ($flash->old('assignment.groups.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this ruleset</option>
+                    <option value="ignore" <?php if ($flash->old('assignment.groups.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this condition</option>
                     <option value="one" <?php if ($flash->old('assignment.groups.method') == "one") { echo "selected='selected'"; } ?>>At least one</option>
                     <option value="all" <?php if ($flash->old('assignment.groups.method') == "all") { echo "selected='selected'"; } ?>>Must be in all</option>
                     <option value="none" <?php if ($flash->old('assignment.groups.method') == "none") { echo "selected='selected'"; } ?>>Cannot be in any</option>
@@ -142,7 +142,7 @@ ModuleAssignmentsSwitch = function(e) {
                         <!-- /.form-group -->
                     </div>                        
                     <div class="text-muted ruleset-disabled <?php if (in_array($flash->old('assignment.groups.method'), array( "one", "all", "none" ) ) ) { echo "hidden"; } ?>">
-                        This ruleset is ignored.
+                        This condition is ignored.
                     </div>                                  
                 </div>              
                   
@@ -171,7 +171,7 @@ ModuleAssignmentsSwitch = function(e) {
         <div class="row">
             <div class="col-md-3">
                 <select name="assignment[referers][method]" class="form-control ruleset-switcher">
-                    <option value="ignore" <?php if ($flash->old('assignment.referers.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this ruleset</option>
+                    <option value="ignore" <?php if ($flash->old('assignment.referers.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this condition</option>
                     <option value="include" <?php if ($flash->old('assignment.referers.method') == "include") { echo "selected='selected'"; } ?>>Display to visitors from...</option>
                     <option value="exclude" <?php if ($flash->old('assignment.referers.method') == "exclude") { echo "selected='selected'"; } ?>>Display to all visitors except those from...</option>
                 </select>                
@@ -201,7 +201,7 @@ ModuleAssignmentsSwitch = function(e) {
                         </div>
                     </div>                        
                     <div class="text-muted ruleset-disabled <?php if (in_array($flash->old('assignment.referers.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
-                        This ruleset is ignored.
+                        This condition is ignored.
                     </div>                                  
                 </div>              
                   

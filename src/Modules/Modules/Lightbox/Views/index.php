@@ -35,14 +35,8 @@ switch ( $module->model->{'lightbox.frequency'})
 jQuery(document).ready(function() {
     
     var cookie_name = "<?php echo $cookie_name; ?>";
-     
-    if (!jQuery.cookie(cookie_name)) {
 
-        <?php if (is_null($expires)) { ?>
-        jQuery.cookie(cookie_name, 1 );
-        <?php } elseif ($expires) { ?>
-        jQuery.cookie(cookie_name, 1, { expires: <?php echo $expires; ?> } );
-        <?php } ?>
+    <?php if ($expires === false) { ?>
 
         bootbox.dialog({
             <?php if ($module->model->{'lightbox.title_enabled'} == 1) { ?>
@@ -50,7 +44,24 @@ jQuery(document).ready(function() {
             <?php } ?>
             message: '<?php echo $module->model->{'copy'}; ?>' 
         });
-        
-    }
+     
+    <?php } else { ?>
+        if (!jQuery.cookie(cookie_name)) {
+    
+            <?php if (is_null($expires)) { ?>
+            jQuery.cookie(cookie_name, 1 );
+            <?php } elseif ($expires) { ?>
+            jQuery.cookie(cookie_name, 1, { expires: <?php echo $expires; ?> } );
+            <?php } ?>
+    
+            bootbox.dialog({
+                <?php if ($module->model->{'lightbox.title_enabled'} == 1) { ?>
+                title: "<?php echo $module->model->title; ?>",
+                <?php } ?>
+                message: '<?php echo $module->model->{'copy'}; ?>' 
+            });
+            
+        }    
+    <?php } ?>
 });
 </script>

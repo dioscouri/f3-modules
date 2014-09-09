@@ -62,7 +62,7 @@ jQuery(document).ready(function() {
                 <?php if ($module->model->{'lightbox.title_enabled'} == 1) { ?>
                 title: "<?php echo $module->model->title; ?>",
                 <?php } ?>
-                message: '<?php echo $module->model->{'copy'}; ?>' 
+                message: jQuery('#lightbox-<?php echo $module->model->id; ?>').html() 
             });
             
         }    

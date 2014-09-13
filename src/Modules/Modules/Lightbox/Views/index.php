@@ -43,6 +43,7 @@ jQuery(document).ready(function() {
     <?php if ($expires === false) { ?>
 
         bootbox.dialog({
+            className: '<?php echo $module->model->{'display.classes'}; ?>',
             <?php if ($module->model->{'lightbox.title_enabled'} == 1) { ?>
             title: "<?php echo $module->model->title; ?>",
             <?php } ?>
@@ -59,6 +60,7 @@ jQuery(document).ready(function() {
             <?php } ?>
     
             bootbox.dialog({
+                className: '<?php echo $module->model->{'display.classes'}; ?>',
                 <?php if ($module->model->{'lightbox.title_enabled'} == 1) { ?>
                 title: "<?php echo $module->model->title; ?>",
                 <?php } ?>

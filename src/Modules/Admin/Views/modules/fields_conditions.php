@@ -99,6 +99,55 @@ ModuleAssignmentsSwitch = function(e) {
 <!-- /.row -->
 
 <hr />
+
+<div id="ruleset-login_status" class="ruleset row">
+    
+    <div class="col-md-2">
+        
+        <h3>Login Status</h3>
+        <p class="help-block">Show/Hide this module based on login status</p>
+                            
+    </div>
+    <!-- /.col-md-2 -->
+                
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3">
+                <select name="assignment[login_status][method]" class="form-control ruleset-switcher">
+                    <option value="ignore" <?php if ($flash->old('assignment.login_status.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this condition</option>
+                    <option value="include" <?php if ($flash->old('assignment.login_status.method') == "include") { echo "selected='selected'"; } ?>>Include</option>
+                    <?php /* ?><option value="exclude" <?php if ($flash->old('assignment.login_status.method') == "exclude") { echo "selected='selected'"; } ?>>Exclude</option> */ ?>
+                </select>                
+            </div>
+            <div class="col-md-9">
+            
+                <div class="ruleset-options">                
+                    <div class="ruleset-enabled <?php if (!in_array($flash->old('assignment.login_status.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
+                        <div class="form-group">
+                            <select name="assignment[login_status][value]" class="form-control">
+                            <?php 
+                            echo \Dsc\Html\Select::options(array(
+                                array('value'=>'0', 'text'=>'Not logged in'),
+                                array('value'=>'1', 'text'=>'Logged in'),
+                            ), $flash->old('assignment.login_status.value')); 
+                            ?>
+                            </select>
+                        </div>
+                    </div>                        
+                    <div class="text-muted ruleset-disabled <?php if (in_array($flash->old('assignment.login_status.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
+                        This condition is ignored.
+                    </div>                                  
+                </div>              
+                  
+            </div>    
+        </div>
+    </div>
+    <!-- /.col-md-10 -->
+    
+</div>
+<!-- /.row -->
+
+<hr />
                     
 <div id="ruleset-groups" class="ruleset row">
     <div class="col-md-2">

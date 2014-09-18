@@ -194,6 +194,15 @@ jQuery(document).ready(function(){
                 <div class="tab-pane" id="tab-display">
                 
                     <div class="form-group">
+                        <label>Output Type</label>
+                        <select name="display[output_type]" class="form-control">
+                            <option value="default" <?php if ($flash->old('display.output_type') == "default") { echo "selected='selected'"; } ?>>Default</option>
+                            <option value="raw" <?php if ($flash->old('display.output_type') == "raw") { echo "selected='selected'"; } ?>>Raw - Content Only</option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->                
+                
+                    <div class="form-group">
                         <label>Display Title</label>
                         <div class="form-group">
                         <label class="radio-inline">

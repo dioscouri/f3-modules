@@ -380,6 +380,15 @@ class Modules extends \Dsc\Mongo\Collections\Content
         if (!$module_html = (new $parts[1](array('model'=>$this)))->html()) {
             return null;
         }
+        
+        switch ($this->{'display.output_type'}) 
+        {
+            case "raw":
+                return $module_html;
+                break;
+            default:
+                break;
+        }
     
         $module_type = (string) preg_replace('/[^A-Z0-9_.-]/i', '', $parts[0]);
         $module_type = ltrim($module_type, '.');

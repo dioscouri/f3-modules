@@ -100,6 +100,46 @@ ModuleAssignmentsSwitch = function(e) {
 
 <hr />
 
+<div id="ruleset-url_queries" class="ruleset row">
+    
+    <div class="col-md-2">
+        
+        <h3>URL Query</h3>
+        <p class="help-block">Show/Hide this module based on strings in the URL query (everything after the ?)</p>
+                            
+    </div>
+    <!-- /.col-md-2 -->
+                
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3">
+                <select name="assignment[url_queries][method]" class="form-control ruleset-switcher">
+                    <option value="ignore" <?php if ($flash->old('assignment.url_queries.method') == "ignore") { echo "selected='selected'"; } ?>>Ignore this condition</option>
+                    <option value="include" <?php if ($flash->old('assignment.url_queries.method') == "include") { echo "selected='selected'"; } ?>>Include</option>
+                    <option value="exclude" <?php if ($flash->old('assignment.url_queries.method') == "exclude") { echo "selected='selected'"; } ?>>Exclude</option>
+                </select>                
+            </div>
+            <div class="col-md-9">
+            
+                <div class="ruleset-options">                
+                    <div class="ruleset-enabled <?php if (!in_array($flash->old('assignment.url_queries.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
+                        <input name="assignment[url_queries][list]" data-tags='[]' value="<?php echo implode(",", (array) $flash->old('assignment.url_queries.list') ); ?>" type="text" class="form-control ui-select2-tags" />
+                    </div>                        
+                    <div class="text-muted ruleset-disabled <?php if (in_array($flash->old('assignment.url_queries.method'), array( "include", "exclude" ) ) ) { echo "hidden"; } ?>">
+                        This condition is ignored.
+                    </div>                                  
+                </div>              
+                  
+            </div>    
+        </div>
+    </div>
+    <!-- /.col-md-10 -->
+    
+</div>
+<!-- /.row -->
+
+<hr />
+
 <div id="ruleset-login_status" class="ruleset row">
     
     <div class="col-md-2">

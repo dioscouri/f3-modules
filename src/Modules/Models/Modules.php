@@ -325,6 +325,7 @@ class Modules extends \Dsc\Mongo\Collections\Content
         // Core conditions
         $types = array(
             'Routes',
+            'UrlQueries',
             'LoginStatus',
             'Referers',
             'Groups'

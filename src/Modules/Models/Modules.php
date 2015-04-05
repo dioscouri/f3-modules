@@ -445,7 +445,7 @@ class Modules extends \Dsc\Mongo\Collections\Content
     public static function distinctTypes($query=array())
     {
         $model = new static();
-        $distinct = $model->collection()->distinct("type", $query);
+        $distinct = $model->collection()->distinct("type", $query ? $query : null);
         $distinct = array_values( array_filter( $distinct ) );
         sort($distinct);
         
@@ -460,7 +460,7 @@ class Modules extends \Dsc\Mongo\Collections\Content
     public static function distinctRoutes($query=array())
     {
         $model = new static();
-        $distinct = $model->collection()->distinct("assignment.routes.list", $query);
+        $distinct = $model->collection()->distinct("assignment.routes.list", $query ? $query : null);
         $distinct = array_values( array_filter( $distinct ) );
         sort($distinct);
     

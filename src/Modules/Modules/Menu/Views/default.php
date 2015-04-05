@@ -24,7 +24,7 @@ foreach ($list as $key => $item)
 	// is this a module?
     // or just a regular link?
     echo '<a href="' . $item->{'details.url'} . '">';
-    echo $item->title;
+    echo $this->lang->get($item->title);
     echo '</a>';
 
 	// The next item is deeper.

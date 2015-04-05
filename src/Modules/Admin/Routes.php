@@ -1,5 +1,5 @@
 <?php
-namespace Modules;
+namespace Modules\Admin;
 
 class Routes extends \Dsc\Routes\Group
 {

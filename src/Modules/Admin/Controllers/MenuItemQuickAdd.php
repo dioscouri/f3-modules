@@ -8,4 +8,9 @@ class MenuItemQuickAdd extends \Admin\Controllers\BaseAuth
 		$view = \Dsc\System::instance()->get('theme');
 		return $view->renderLayout('Modules/Admin/Views::quickadd/html.php');
 	}
+	
+	public function custom($event)
+	{
+	    return $this->theme->renderView('Modules/Admin/Views::quickadd/custom.php');
+	}
 }

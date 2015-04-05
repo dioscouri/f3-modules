@@ -1,4 +1,4 @@
-<form class="form-horizontal" action="./admin/menu/create" method="post">
+<form action="./admin/menu/create" method="post">
     <p class="">
 		<label for="link-text" class="control-label">Title</label>
 		<input type="text" class="form-control" id="link-title"

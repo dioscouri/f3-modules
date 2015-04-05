@@ -1,0 +1,1 @@
+<?php echo \Modules\Factory::render( $nav_item->{'details.module_position'}, \Base::instance()->get('PARAMS.0') ); ?>

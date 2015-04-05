@@ -50,6 +50,12 @@ class Listener extends \Prefab
         
         $items[] = $item;
         
+        $item = new \stdClass();
+        $item->title = 'Custom Routes';
+        $item->form = \Modules\Admin\Controllers\MenuItemQuickAdd::instance()->custom($event);
+        
+        $items[] = $item;
+        
         $event->setArgument('items', $items);
     }
 
@@ -63,6 +69,12 @@ class Listener extends \Prefab
         {
             $tabs[] = 'HTML Module';
             $content[] = \Modules\Admin\Controllers\MenuItem::instance()->html($event);
+        }
+        
+        if (strpos($item->{'details.type'}, 'module-custom') !== false)
+        {
+            $tabs[] = 'Custom Route';
+            $content[] = \Modules\Admin\Controllers\MenuItem::instance()->custom($event);
         }
         
         $event->setArgument('tabs', $tabs);

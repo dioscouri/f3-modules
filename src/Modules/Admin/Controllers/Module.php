@@ -47,8 +47,16 @@ class Module extends \Admin\Controllers\BaseAuth
         \Base::instance()->set('all_positions', $all_positions );
         
         $this->app->set('meta.title', 'Create Module | Modules');
+
+        $item = $this->getItem();
+        $type = 'core.html::\Modules\Modules\Html\Module';
+        
+        $flash = new \Dsc\Flash;
+        $flash->store(array('type'=>$type));
         
         $view = \Dsc\System::instance()->get('theme');
+        $view->event = $view->trigger( 'onDisplayAdminModuleEdit', array( 'module' => $type, 'item' => $item, 'tabs' => array(), 'content' => array() ) );
+        
         echo $view->render('Modules/Admin/Views::modules/create.php');
     }
     

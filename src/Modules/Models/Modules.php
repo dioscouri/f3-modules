@@ -109,6 +109,25 @@ class Modules extends \Dsc\Mongo\Collections\Content
 
     protected function beforeSave()
     {
+        if (!empty($this->images))
+        {
+            $images = array();
+            $current = $this->images;
+            $this->images = array();
+        
+            foreach ($current as $image)
+            {
+                if (!empty($image['image']))
+                {
+                    $images[] = array(
+                        'image' => $image['image']
+                    );
+                }
+            }
+        
+            $this->images = $images;
+        }
+        
         $this->ordering = (int) $this->ordering;
         
         if (!empty($this->positions) && !is_array($this->positions))

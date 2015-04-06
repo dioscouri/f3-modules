@@ -50,6 +50,9 @@
                         <a href="#tab-basics" data-toggle="tab"> Basics </a>
                     </li>
                     <li>
+                        <a href="#tab-images" data-toggle="tab"> Images </a>
+                    </li>
+                    <li>
                         <a href="#tab-display" data-toggle="tab"> Display </a>
                     </li>
                     <li>
@@ -82,6 +85,13 @@
                         
                         <?php echo $this->renderLayout('Modules/Admin/Views::form_fields/admin_description.php'); ?>
                     
+                    </div>
+                    <!-- /.tab-pane -->
+                    
+                    <div class="tab-pane" id="tab-images">
+                    
+                        <?php echo $this->renderLayout('Admin/Views::form_fields/images.php'); ?>
+                                            
                     </div>
                     <!-- /.tab-pane -->
                     

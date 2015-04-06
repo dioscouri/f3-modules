@@ -105,7 +105,7 @@
         <input type="hidden" name="list[order]" value="<?php echo $state->get('list.order'); ?>" />
         <input type="hidden" name="list[direction]" value="<?php echo $state->get('list.direction'); ?>" />
         
-        <div class="table-responsive datatable dt-wrapper dataTables_wrapper">
+        <div class="">
             
             <table class="table table-striped table-bordered table-hover table-highlight table-checkable">
     		<thead>
@@ -122,6 +122,8 @@
             <?php if (!empty($paginated->items)) { ?>
             
             <?php foreach($paginated->items as $item) { ?>
+            <?php $xEditable = new \Dsc\Html\xEditable($item, '/admin/module/edit/inline'); ?>
+            
                 <tr>
                     <td class="checkbox-column">
                         <input type="checkbox" class="icheck-input" name="ids[]" value="<?php echo $item->id; ?>">
@@ -159,7 +161,10 @@
                     </td>
                     
                     <td class="">
-                    <?php echo (int) $item->{'ordering'}; ?>
+                        <div>
+                            <label>Position: </label>
+                            <?php echo $xEditable->field( 'ordering' ); ?>
+                        </div>                    
                     </td>
                     
                     <td class="">

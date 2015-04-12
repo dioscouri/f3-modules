@@ -48,9 +48,12 @@ class Modules extends \Dsc\Mongo\Collections\Content
         }
         
         $filter_type = $this->getState('filter.type');
-        if (strlen($filter_type))
-        {
-            $this->setCondition('type', $filter_type);
+        if ($filter_type) {
+            if (is_bool($filter_type) && $filter_type) {
+                $this->unsetCondition( 'type' );
+            } elseif (strlen($filter_type)) {
+                $this->setCondition('type', $filter_type );
+            }
         }
         
         $filter_position = $this->getState('filter.position');

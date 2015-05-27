@@ -259,7 +259,7 @@ class Modules extends \Dsc\Mongo\Collections\Content
             ksort($grouped);
             foreach ($grouped as $key=>$type)
             {
-                $grouped[$key] = \Joomla\Utilities\ArrayHelper::sortObjects($grouped[$key], 'title');
+                $grouped[$key] = \Dsc\ArrayHelper::sortObjects($grouped[$key], 'title');
             }            
             
             return $grouped;  

@@ -42,9 +42,11 @@ class Factory extends \Prefab
     public static function load( $position, $route=null, $options=array() )
     {
         $return = array();
-
+        
         $model = new \Modules\Models\Modules;
-        $list = $model->setState('filter.position', $position)->setState('filter.published', true)->getList();
+        $list = $model->setState('filter.language', true)->setState('filter.position', $position)
+        ->setState('filter.published', true)
+        ->getList();
         
         // Run each module in $return through the Assignments check
         foreach ($list as $module) 

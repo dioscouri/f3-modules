@@ -15,7 +15,7 @@ class Modules extends \Admin\Controllers\BaseAuth
     public function index()
     {
         $model = $this->getModel();
-        $state = $model->populateState()->setState('filter.type', true)->getState();
+        $state = $model->populateState()->setState('filter.language', true)->getState();
         \Base::instance()->set('state', $state );
         
         $paginated = $model->paginate();

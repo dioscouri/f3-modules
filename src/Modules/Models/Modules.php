@@ -17,7 +17,27 @@ class Modules extends \Dsc\Mongo\Collections\Content
     
     public function type()
     {
-        return $this->originalType();
+        $type = $this->originalType();
+        if ($this->type) {
+            $type = $this->type;
+        }
+        
+        return $type;
+    }
+    
+    public function originalType()
+    {
+        $type = $this->__type;
+        if ($this->type) {
+            $type = $this->type;
+        }
+        
+        if ($lang = $this->lang())
+        {
+            $type = str_replace($lang.'.', '', $type);
+        }
+    
+        return $type;
     }
     
     /**
@@ -33,7 +53,7 @@ class Modules extends \Dsc\Mongo\Collections\Content
         {
             return $this;
         }
-    
+
         $item = (new static)->load(array('type'=>$this->type(), 'language' => $lang, 'slug' => $this->slug));
     
         if (empty($item->id))
@@ -42,6 +62,36 @@ class Modules extends \Dsc\Mongo\Collections\Content
         }
     
         return $item;
+    }
+    
+    public function getItems($refresh=false)
+    {
+        $this->__skip_translatable = true;
+        
+        $items = parent::getItems($refresh);
+        $lang = \Base::instance()->get('lang');
+        $default_lang = 'en'; // TODO get from a config
+        
+        if (!empty($items))
+        {
+             if ($lang && $lang != $default_lang)
+             {
+                 foreach ($items as $key=>$item)
+                 {
+                     // does a translation exist?
+                     // if so, use it
+                     $model = (new static)->set('slug', $item->slug)->set('type', $item->type);
+                     if ($translated = $model->translationExists($lang))
+                     {
+                         if ($translated->id != $item->id) {
+                             $items[$key] = $translated;
+                         }                     
+                     }                     
+                 }
+             }
+        }
+        
+        return $items;
     }
     
     protected function fetchConditions()

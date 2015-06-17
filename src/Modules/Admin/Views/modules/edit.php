@@ -63,7 +63,10 @@
                     </li>
                     <li>
                         <a href="#tab-options" data-toggle="tab"> Type </a>
-                    </li>                
+                    </li>     
+                    <li>
+                        <a href="#tab-translations" data-toggle="tab"> Translations </a>
+                    </li>
                 </ul>
                 
                 <div class="tab-content">
@@ -115,6 +118,12 @@
                     <div class="tab-pane" id="tab-options">
 
                         <?php echo $this->renderLayout('Modules/Admin/Views::form_fields/type.php'); ?>
+                            
+                    </div>
+                    
+                    <div class="tab-pane" id="tab-translations">
+                    
+                        <?php echo $this->renderLayout('Modules/Admin/Views::form_fields/translations.php'); ?>
                             
                     </div>
                     

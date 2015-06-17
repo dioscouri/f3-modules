@@ -15,9 +15,44 @@ class Modules extends \Dsc\Mongo\Collections\Content
         ),
     );
     
+    public function type()
+    {
+        return $this->originalType();
+    }
+    
+    /**
+     * Does a translation exist for this item?
+     *
+     * @param unknown $lang
+     * @return \Dsc\Traits\Models\Translatable|boolean|unknown
+     */
+    public function translationExists( $lang )
+    {
+        $default_lang = 'en';
+        if ($lang == $default_lang)
+        {
+            return $this;
+        }
+    
+        $item = (new static)->load(array('type'=>$this->type(), 'language' => $lang, 'slug' => $this->slug));
+    
+        if (empty($item->id))
+        {
+            return false;
+        }
+    
+        return $item;
+    }
+    
     protected function fetchConditions()
     {
         parent::fetchConditions();
+        /*
+        $filter_type = $this->getState('filter.type');
+        if (!is_bool($filter_type) && !strlen($filter_type)) {
+            $key = new \MongoRegex('/'.$this->type().'/i');
+            $this->setCondition('type', $key);
+        }*/
 
         $filter_keyword = $this->getState('filter.keyword');
         if ($filter_keyword && is_string($filter_keyword))

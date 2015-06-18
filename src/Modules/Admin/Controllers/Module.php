@@ -21,6 +21,9 @@ class Module extends \Admin\Controllers\BaseAuth
     {
         $f3 = \Base::instance();
         $id = $this->inputfilter->clean( $f3->get('PARAMS.id'), 'alnum' );
+        if( $id == null){
+            return $this->getModel();
+        }
         $model = $this->getModel()
             ->setState('filter.id', $id);
 

@@ -33,13 +33,13 @@
                     }
                                         
                 }
-                elseif ($language->code == $item->language) 
+                elseif (!empty($item->language) && $language->code == $item->language) 
                 {
                     ?>
                     <p>This is the <b><?php echo $language->code; ?></b> translation.</p>
                     <?php
                 }
-                elseif ($translation = $item->translationExists( $language->code ) ) 
+                elseif (!empty($item) && $translation = $item->translationExists( $language->code ) ) 
                 {
                     if ($translation->id != $item->id) 
                     {  

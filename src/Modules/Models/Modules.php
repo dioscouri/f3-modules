@@ -64,9 +64,26 @@ class Modules extends \Dsc\Mongo\Collections\Content
         return $item;
     }
     
+    /**
+     *
+     *
+     * @param string $slug
+     * @return unknown|boolean
+     */
+    public function slugExists( $slug )
+    {
+        $clone = (new static)->load(array('slug'=>$slug, 'type'=>$this->type(), 'language' => $this->lang() ));
+    
+        if (!empty($clone->id)) {
+            return $clone;
+        }
+    
+        return false;
+    }
+    
     public function getItems($refresh=false)
     {
-        $this->__skip_translatable = true;
+        $this->__translatable = false;
         
         $items = parent::getItems($refresh);
         $lang = \Base::instance()->get('lang');

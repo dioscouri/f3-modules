@@ -15,9 +15,9 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "dioscouri/f3-lib": "dev-master",
-        "dioscouri/f3-admin": "dev-master",
-        "snowplow/referer-parser": "dev-master"
+        "dioscouri/f3-lib": ">=v0.8",
+        "dioscouri/f3-admin": ">=v0.8",
+        "snowplow/referer-parser": ">=0.1.0"
     },
     "autoload": {
         "psr-0": {

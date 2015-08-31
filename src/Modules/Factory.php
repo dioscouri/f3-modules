@@ -14,7 +14,7 @@ class Factory extends \Prefab
         if( !empty( $paths ) ){
 	        foreach ($paths as $path)
 	        {
-	            if ($folders = \Joomla\Filesystem\Folder::folders( $path ))
+	            if ($folders = \Dsc\Filesystem\Folder::folders( $path ))
 	            {
 	                foreach ($folders as $folder)
 	                {

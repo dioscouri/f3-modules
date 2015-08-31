@@ -303,7 +303,7 @@ class Modules extends \Dsc\Mongo\Collections\Content
         
         foreach ($paths as $path) 
         {
-            if ($folders = \Joomla\Filesystem\Folder::folders( $path ))
+            if ($folders = \Dsc\Filesystem\Folder::folders( $path ))
             {
                 foreach ($folders as $folder)
                 {

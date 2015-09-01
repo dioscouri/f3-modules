@@ -367,7 +367,7 @@ class Modules extends \Dsc\Mongo\Collections\Content
             return $grouped;  
         }
         
-        $types = \DscArrayHelper::sortObjects($types, 'type');
+        $types = \Dsc\ArrayHelper::sortObjects($types, 'type');
 
         return $types;
     }
